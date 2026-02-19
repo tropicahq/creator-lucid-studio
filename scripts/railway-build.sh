@@ -13,5 +13,6 @@ bun install --production
 echo "RUNNING MIGRATION"
 # ENV_PATH=/etc/secrets/.env
 # node ace migration:run --force
+printenv >.env
 echo "GOING OUT OF BUILD"
 cd ..
