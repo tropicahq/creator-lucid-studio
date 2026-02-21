@@ -7,7 +7,7 @@ export default function Onboard(props: DefaultPageProps) {
 		<MainLayout {...props}>
 			<Head title="Get Started" />
 			<div className="mx-auto max-w-210 py-px">
-				<div className="mb-11 flex flex-col justify-center items-center h-full">
+				<div className="mb-11 mt-4 text-center">
 					<h1 className="text-4xl font-black tracking-tight mb-4">
 						Complete Your Profile
 					</h1>
@@ -19,7 +19,7 @@ export default function Onboard(props: DefaultPageProps) {
 				</div>
 				<div className="space-y-10" />
 				{/*<!-- Section 1: Content Niche -->*/}
-				<section className="rounded-xl border border-slate-200  bg-white  p-8 shadow-sm">
+				<section className="rounded-xl border border-slate-200  bg-white  py-8 md:px-8 px-5 shadow-sm">
 					<div className="flex items-center gap-4 mb-6">
 						<span className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
 							1
@@ -33,16 +33,17 @@ export default function Onboard(props: DefaultPageProps) {
 					<div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
 						{/*<!-- Card 1 (Active/Selected Example) -->*/}
 						<div className="card-selected group relative flex cursor-pointer flex-col gap-3 rounded-xl border border-slate-200 p-5 transition-all hover:border-primary">
-							{/*<span className="material-symbols-outlined text-primary text-3xl">
+							<span className="material-symbols-outlined text-primary text-3xl">
 								memory
-							</span>*/}
-							<MemoryStickIcon className="text-primary text-3xl" />
+							</span>
 							<div>
 								<h3 className="font-bold">Tech &amp; AI</h3>
 								<p className="text-xs text-slate-500">Latest in technology</p>
 							</div>
 							<div className="absolute top-3 right-3 text-primary">
-								<CheckCircle2 className="text-lg" />
+								<span className="material-symbols-outlined text-lg">
+									check_circle
+								</span>
 							</div>
 						</div>
 						{/*<!-- Card 2 -->*/}
