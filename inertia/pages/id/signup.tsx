@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import { EyeClosedIcon, EyeIcon, GalleryVerticalEnd } from "lucide-react";
 import { useState } from "react";
-import Layout from "~/components/shared/layout";
+import AuthLayout from "~/components/shared/auth-layout";
 import { Button } from "~/components/ui/button";
 import {
 	Field,
@@ -23,14 +23,14 @@ import { cn } from "~/lib/utils";
 
 const Signup = (props: DefaultPageProps) => {
 	return (
-		<Layout flashMessage={props.flashMessage}>
+		<AuthLayout {...props}>
 			<Head title="Signup" />
 			<div className="flex flex-1 md:items-center justify-center">
 				<div className="w-full max-w-md">
 					<SignupForm noValidate={true} />
 				</div>
 			</div>
-		</Layout>
+		</AuthLayout>
 	);
 };
 

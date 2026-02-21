@@ -1,14 +1,13 @@
 import { defineConfig } from "@adonisjs/inertia";
 import type { InferSharedProps } from "@adonisjs/inertia/types";
+import env from "#start/env";
 
 const inertiaConfig = defineConfig({
 	/**
 	 * Path to the Edge view that will be used as the root view for Inertia responses
 	 */
-	rootView: ({ request }) => {
-		return request.url().startsWith("/id")
-			? "inertia_id_layout"
-			: "inertia_layout";
+	rootView: (_) => {
+		return "inertia_layout";
 	},
 
 	/**
@@ -20,6 +19,16 @@ const inertiaConfig = defineConfig({
 				error: ctx.session.flashMessages.get("error"),
 				success: ctx.session.flashMessages.get("success"),
 			})),
+		appName: env.get("APP_NAME"),
+		isOnboarded: (ctx) =>
+			ctx.inertia.always(async () => {
+				const auth = ctx.auth.user;
+				if (auth) {
+					await auth.load("profile");
+					return !!auth.profile;
+				}
+				return false;
+			}),
 		// user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
 	},
 

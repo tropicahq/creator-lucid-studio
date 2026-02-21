@@ -3,10 +3,16 @@ import User from "#models/user";
 import { idLoginValidator } from "#validators/id_validator";
 
 export default class AuthController {
-	public async loginShow({ inertia }: HttpContext) {
-		return inertia.render("id/login");
-	}
-	public async login({ request, response, session }: HttpContext) {
+	// public async loginShow({ inertia }: HttpContext) {
+	// 	return inertia.render("id/login");
+	// }
+	public async login({
+		request,
+		response,
+		session,
+		auth,
+		logger,
+	}: HttpContext) {
 		const payload = await request.validateUsing(idLoginValidator);
 		try {
 			const user = await User.verifyCredentials(
@@ -14,14 +20,14 @@ export default class AuthController {
 				payload.password,
 			);
 			if (user) {
-				console.log("Login successful");
-				return response.ok({});
-				// return response.redirect("/studio");
+				await auth.use("web").login(user);
+				return response.redirect().status(301).toRoute("dashboard");
 			} else {
 				session.flash("error", "Invalid email or password");
 				return response.redirect("/id/login");
 			}
 		} catch (error) {
+			logger.error(error);
 			session.flash("error", "An error occurred.");
 			return response.redirect("/id/login");
 		}
@@ -40,11 +46,12 @@ export default class AuthController {
 	//     response.redirect('/id/signup');
 	//   }
 	// }
-	// public async logout({ response }: HttpContext) {
-	//   const user = await User.findByOrFail('id', response.session.get('user_id'));
-	//   await user.revokeToken();
-	//   response.redirect('/id/login');
-	// }
+	public async logout({ response, session, auth }: HttpContext) {
+		await auth.use("web").logout();
+		session.clear();
+		session.flash("success", "You have been logged out.");
+		return response.redirect().toRoute("login");
+	}
 	// public async forgotPassword({ request, response }: HttpContext) {
 	//   const { email } = request.only(['email']);
 	//   try {

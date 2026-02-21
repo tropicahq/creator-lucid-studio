@@ -1,4 +1,8 @@
-type DefaultPageProps = { flashMessage: { error?: string; success?: string } };
+type DefaultPageProps = {
+	flashMessage: { error?: string; success?: string };
+	appName: string;
+	isOnboarded: boolean;
+};
 
 type LayoutProps = DefaultPageProps & {
 	children: React.ReactNode;

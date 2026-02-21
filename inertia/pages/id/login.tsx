@@ -1,6 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import { EyeClosedIcon, EyeIcon, GalleryVerticalEnd } from "lucide-react";
 import { useState } from "react";
+import AuthLayout from "~/components/shared/auth-layout";
 import Layout from "~/components/shared/layout";
 import { Button } from "~/components/ui/button";
 import {
@@ -23,16 +24,17 @@ import { cn } from "~/lib/utils";
 
 const Sigin = (props: DefaultPageProps) => {
 	return (
-		<Layout flashMessage={props.flashMessage}>
+		<AuthLayout {...props}>
 			<Head title="Sig in" />
 			<div className="flex flex-1 md:items-center justify-center">
 				<div className="w-full max-w-md">
 					<SiginForm noValidate={true} />
 				</div>
 			</div>
-		</Layout>
+		</AuthLayout>
 	);
 };
+// Sigin.layout = ({ key, ...props }: any) => <AuthLayout key={key} {...props} />;
 
 export default Sigin;
 

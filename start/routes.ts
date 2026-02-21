@@ -16,21 +16,42 @@ const UsersController = () => import("#controllers/users_controller");
 const AuthController = () => import("#controllers/auth_controller");
 
 // openapi.registerRoutes();
-router.on("/").renderInertia("home");
+router
+	.on("/onboard")
+	.renderInertia("onboard/index")
+	.as("profile.onboard")
+	.middleware(middleware.auth());
 router.jobs();
 router
 	.group(() => {
-		router.get("/signup", [UsersController, "createUserShow"]);
-
+		router.on("/signup").renderInertia("id/signup").as("signup");
 		router.post("/signup", [UsersController, "createUser"]);
 		router
-			.get("/login", [AuthController, "loginShow"])
-			.middleware([middleware.guest()]);
+			.on("/login")
+			.renderInertia("id/login")
+			.as("login")
+			.middleware(middleware.guest());
 		router
 			.post("/login", [AuthController, "login"])
 			.middleware([middleware.guest()]);
+
+		router
+			.post("/logout", [AuthController, "logout"])
+			.as("logout")
+			.middleware(middleware.auth());
 	})
 	.prefix("id");
+
+router
+	.group(() => {
+		router.on("/").renderInertia("home").as("dashboard");
+
+		// router
+		// 	.on("/logout", [AuthController, "logout"])
+		// 	.as("logout");
+	})
+	.middleware([middleware.auth(), middleware.ensureOnboardPass()]);
+
 // router.post("/create-post-analysis", [
 // 	JobAnalysisManagersController,
 // 	"creatJob",
