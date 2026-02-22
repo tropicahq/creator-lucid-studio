@@ -1,8 +1,10 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import { EyeClosedIcon, EyeIcon, GalleryVerticalEnd } from "lucide-react";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import AuthLayout from "~/components/shared/layout/auth-layout";
+import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { ButtonGroup } from "~/components/ui/button-group";
 import {
 	Field,
 	FieldDescription,
@@ -12,12 +14,6 @@ import {
 	FieldSeparator,
 } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
-import {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupButton,
-	InputGroupInput,
-} from "~/components/ui/input-group";
 import { Spinner } from "~/components/ui/spinner";
 import { cn } from "~/lib/utils";
 
@@ -67,7 +63,7 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 						Fill in the form below to create your account
 					</p>*/}
 				</div>
-				<div className="grid grid-cols-2 gap-4">
+				<FieldGroup className="grid md:grid-cols-2 grid-cols-1 max-w-full">
 					<Field>
 						<FieldLabel htmlFor="name">Full name</FieldLabel>
 						<Input
@@ -96,7 +92,7 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 							<FieldError>{form.errors.userName}</FieldError>
 						)}
 					</Field>
-				</div>
+				</FieldGroup>
 				<Field>
 					<FieldLabel htmlFor="email">Email</FieldLabel>
 					<Input
@@ -115,8 +111,8 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 				</Field>
 				<Field>
 					<FieldLabel htmlFor="password">Password</FieldLabel>
-					<InputGroup>
-						<InputGroupInput
+					<ButtonGroup>
+						<Input
 							id="password"
 							disabled={form.processing}
 							type={showPassword ? "text" : "password"}
@@ -124,16 +120,17 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 							placeholder="Your password"
 							required
 						/>
-						<InputGroupAddon align={"inline-end"}>
-							<InputGroupButton
-								size={"sm"}
-								onClick={() => setShowPassword(!showPassword)}
-							>
-								{" "}
-								{showPassword ? <EyeIcon /> : <EyeClosedIcon />}
-							</InputGroupButton>
-						</InputGroupAddon>
-					</InputGroup>
+						<Button
+							className={"h-auto"}
+							size={"sm"}
+							variant={"outline"}
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+						>
+							{" "}
+							{showPassword ? <EyeIcon /> : <EyeClosedIcon />}
+						</Button>
+					</ButtonGroup>
 					{form.errors.password && (
 						<FieldError>{form.errors.password}</FieldError>
 					)}
@@ -161,6 +158,11 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 				</Field>
 				<FieldSeparator>OR</FieldSeparator>
 				<Field>
+					<FieldLabel>
+						<Badge variant="secondary" className="ml-auto">
+							Coming Soon
+						</Badge>
+					</FieldLabel>
 					<Button
 						disabled={form.processing}
 						variant="outline"

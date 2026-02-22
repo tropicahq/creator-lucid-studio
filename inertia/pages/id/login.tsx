@@ -1,8 +1,10 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import { EyeClosedIcon, EyeIcon, GalleryVerticalEnd } from "lucide-react";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import AuthLayout from "~/components/shared/layout/auth-layout";
+import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { ButtonGroup } from "~/components/ui/button-group";
 import {
 	Field,
 	FieldDescription,
@@ -12,12 +14,6 @@ import {
 	FieldSeparator,
 } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
-import {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupButton,
-	InputGroupInput,
-} from "~/components/ui/input-group";
 import { Spinner } from "~/components/ui/spinner";
 import { cn } from "~/lib/utils";
 
@@ -92,8 +88,8 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 						</Link>
 					</div>
 
-					<InputGroup>
-						<InputGroupInput
+					<ButtonGroup>
+						<Input
 							id="password"
 							disabled={form.processing}
 							onChange={(e) => form.setData("password", e.target.value)}
@@ -101,16 +97,17 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 							placeholder="Your password"
 							required
 						/>
-						<InputGroupAddon align={"inline-end"}>
-							<InputGroupButton
-								size={"sm"}
-								onClick={() => setShowPassword(!showPassword)}
-							>
-								{" "}
-								{showPassword ? <EyeIcon /> : <EyeClosedIcon />}
-							</InputGroupButton>
-						</InputGroupAddon>
-					</InputGroup>
+						<Button
+							className={"h-auto"}
+							size={"sm"}
+							variant={"outline"}
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+						>
+							{" "}
+							{showPassword ? <EyeIcon /> : <EyeClosedIcon />}
+						</Button>
+					</ButtonGroup>
 					{form.errors.password && (
 						<FieldError>{form.errors.password}</FieldError>
 					)}
@@ -134,6 +131,11 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 				</Field>
 				<FieldSeparator>OR</FieldSeparator>
 				<Field>
+					<FieldLabel>
+						<Badge variant="secondary" className="ml-auto">
+							Coming Soon
+						</Badge>
+					</FieldLabel>
 					<Button
 						variant="outline"
 						size={"lg"}
