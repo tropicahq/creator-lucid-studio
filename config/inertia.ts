@@ -29,7 +29,7 @@ const inertiaConfig = defineConfig({
 				}
 				return false;
 			}),
-		// user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
+		user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
 	},
 
 	/**

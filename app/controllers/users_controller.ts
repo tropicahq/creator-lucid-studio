@@ -19,4 +19,19 @@ export default class UsersController {
 			return response.redirect().back();
 		}
 	}
+	public async onboardUser({ request, response, session }: HttpContext) {
+		// const payload = await request.validateUsing(idCreateUserValidator);
+		// try {
+		// 	await User.create(payload);
+		// 	session.flash("success", "Your new account has been created 🎉!");
+		// 	return response.redirect("/id/login");
+		// } catch (error) {
+		// 	console.error(error);
+		// 	session.flash("error", "Failed to create user");
+		// 	return response.redirect().back();
+		// }
+		session.flash("success", "Nothing here for now!");
+		console.log(request.body());
+		return response.redirect().back();
+	}
 }

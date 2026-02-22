@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import MainLayout from "~/components/shared/main-layout";
+import MainLayout from "~/components/shared/layout/main-layout";
 
 export default function Home(props: DefaultPageProps) {
 	return (

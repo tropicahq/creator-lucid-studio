@@ -1,8 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import { EyeClosedIcon, EyeIcon, GalleryVerticalEnd } from "lucide-react";
 import { useState } from "react";
-import AuthLayout from "~/components/shared/auth-layout";
-import Layout from "~/components/shared/layout";
+import AuthLayout from "~/components/shared/layout/auth-layout";
 import { Button } from "~/components/ui/button";
 import {
 	Field,

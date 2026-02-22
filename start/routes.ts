@@ -8,6 +8,7 @@
 */
 import router from "@adonisjs/core/services/router";
 import { middleware } from "./kernel.js";
+import { throttle } from "./limiter.js";
 
 // import * as devalue from "devalue";
 // const _JobAnalysisManagersController = import("#controllers/job_analysis_managers_controller");
@@ -17,15 +18,20 @@ const AuthController = () => import("#controllers/auth_controller");
 
 // openapi.registerRoutes();
 router
-	.on("/onboard")
-	.renderInertia("onboard/index")
-	.as("profile.onboard")
-	.middleware(middleware.auth());
+	.group(() => {
+		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
+		router
+			.post("/onboard", [UsersController, "onboardUser"])
+			.middleware(throttle);
+	})
+	.middleware([middleware.auth()]);
 router.jobs();
 router
 	.group(() => {
 		router.on("/signup").renderInertia("id/signup").as("signup");
-		router.post("/signup", [UsersController, "createUser"]);
+		router
+			.post("/signup", [UsersController, "createUser"])
+			.middleware(throttle);
 		router
 			.on("/login")
 			.renderInertia("id/login")
@@ -33,22 +39,19 @@ router
 			.middleware(middleware.guest());
 		router
 			.post("/login", [AuthController, "login"])
-			.middleware([middleware.guest()]);
+			.middleware([middleware.guest()])
+			.middleware(throttle);
 
 		router
 			.post("/logout", [AuthController, "logout"])
 			.as("logout")
-			.middleware(middleware.auth());
+			.middleware([throttle, middleware.auth()]);
 	})
 	.prefix("id");
 
 router
 	.group(() => {
 		router.on("/").renderInertia("home").as("dashboard");
-
-		// router
-		// 	.on("/logout", [AuthController, "logout"])
-		// 	.as("logout");
 	})
 	.middleware([middleware.auth(), middleware.ensureOnboardPass()]);
 

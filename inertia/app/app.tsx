@@ -5,7 +5,6 @@ import "../css/app.css";
 import { resolvePageComponent } from "@adonisjs/inertia/helpers";
 import { createInertiaApp } from "@inertiajs/react";
 import { hydrateRoot } from "react-dom/client";
-import MainLayout from "~/components/shared/main-layout";
 
 // import.meta.glob(["../../resources/assets/**"]);
 const appName = import.meta.env.VITE_APP_NAME || "AdonisJS";

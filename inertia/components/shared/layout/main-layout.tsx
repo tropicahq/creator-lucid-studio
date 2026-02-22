@@ -1,3 +1,4 @@
+import { usePage } from "@inertiajs/react";
 import { ChartColumnStacked } from "lucide-react";
 import Profile from "#models/profile";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
@@ -10,13 +11,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { getInitials } from "~/lib/utils";
 import {
 	NavigationMenu,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
-} from "../ui/navigation-menu";
-import ProfileDropdown from "./dropdown-profile";
+} from "../../ui/navigation-menu";
+import ProfileDropdown from "../dropdown-profile";
 import Layout from "./layout";
 
 export default function MainLayout({ children, ...props }: LayoutProps) {
@@ -36,6 +38,8 @@ export default function MainLayout({ children, ...props }: LayoutProps) {
 }
 
 function Header({ isOnboarding }: { isOnboarding: boolean }) {
+	const page = usePage();
+	const { user } = page.props;
 	return (
 		<header className="bg-card sticky top-0 z-50">
 			<div>
@@ -61,7 +65,9 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 									className="size-9 rounded-full"
 								>
 									<Avatar className={"size-9"}>
-										<AvatarFallback>T</AvatarFallback>
+										<AvatarFallback>
+											{getInitials(user.fullName)}
+										</AvatarFallback>
 									</Avatar>
 								</Button>
 							}

@@ -146,8 +146,11 @@
 			"opsz" 24;
 	}
 	.card-selected {
-		border-color: #5048e5;
-		background-color: rgba(80, 72, 229, 0.05);
-		box-shadow: 0 0 0 1px #5048e5;
+		&:where([data-selected="true"]) {
+			/*border-color: #5048e5;
+			background-color: rgba(80, 72, 229, 0.05);
+			box-shadow: 0 0 0 1px #5048e5;*/
+			@apply border border-primary bg-[rgba(80,72,229,0.05)];
+		}
 	}
 }

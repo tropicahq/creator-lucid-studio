@@ -1,9 +1,10 @@
+import { ExceptionHandler, type HttpContext } from "@adonisjs/core/http";
 import app from "@adonisjs/core/services/app";
-import { HttpContext, ExceptionHandler } from "@adonisjs/core/http";
 import type {
 	StatusPageRange,
 	StatusPageRenderer,
 } from "@adonisjs/core/types/http";
+import { errors } from "@adonisjs/limiter";
 
 export default class HttpExceptionHandler extends ExceptionHandler {
 	/**
@@ -35,6 +36,20 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 	 * response to the client
 	 */
 	async handle(error: unknown, ctx: HttpContext) {
+		if (
+			error instanceof errors.E_TOO_MANY_REQUESTS &&
+			ctx.request.header("x-inertia")
+		) {
+			const message = error.getResponseMessage(ctx);
+			const headers = error.getDefaultHeaders();
+			ctx.session.flash("error", message);
+			Object.keys(headers).forEach((header) => {
+				ctx.response.header(header, headers[header]);
+			});
+
+			// return ctx.response.status(error.status).send(message);
+			return ctx.response.redirect().back();
+		}
 		return super.handle(error, ctx);
 	}
 

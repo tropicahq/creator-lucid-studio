@@ -1,4 +1,4 @@
-import { Form } from "@inertiajs/react";
+import { Form, usePage } from "@inertiajs/react";
 import {
 	CirclePlusIcon,
 	CreditCardIcon,
@@ -20,6 +20,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { getInitials } from "~/lib/utils";
 import { Button } from "../ui/button";
 
 type Props = {
@@ -29,6 +30,8 @@ type Props = {
 };
 
 const ProfileDropdown = ({ trigger, defaultOpen, align = "end" }: Props) => {
+	const page = usePage();
+	const user = page.props.user;
 	return (
 		<DropdownMenu defaultOpen={defaultOpen}>
 			<DropdownMenuTrigger render={trigger} />
@@ -41,16 +44,16 @@ const ProfileDropdown = ({ trigger, defaultOpen, align = "end" }: Props) => {
 												src="https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png"
 												alt="John Doe"
 											/>*/}
-								<AvatarFallback>T</AvatarFallback>
+								<AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
 							</Avatar>
 							<span className="ring-card absolute right-0 bottom-0 block size-2 rounded-full bg-green-600 ring-2" />
 						</div>
 						<div className="flex flex-1 flex-col items-start">
 							<span className="text-foreground text-lg font-semibold">
-								John Doe
+								{user.fullName}
 							</span>
 							<span className="text-muted-foreground text-base">
-								john.doe@example.com
+								{user.email}
 							</span>
 						</div>
 					</DropdownMenuLabel>
