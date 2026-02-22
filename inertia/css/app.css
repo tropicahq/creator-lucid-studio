@@ -42,6 +42,59 @@
 	--foreground: oklch(0.141 0.005 285.823);
 }
 
+:root {
+	/* Coral dark mode */
+	--demo-coral-solid: #eb5e41;
+	--demo-coral-emphasized: #ef6b4e;
+	--demo-coral-muted: #722b25;
+	--demo-coral-subtle: #55221e;
+	--demo-coral-fg: #f47a5c;
+	--demo-coral-contrast: white;
+	--demo-coral-focus-ring: #e2503f;
+
+	/* Neutral dark mode (Sand from park-ui) */
+	--demo-neutral-solid: #6f6d66;
+	--demo-neutral-emphasized: #7c7b74;
+	--demo-neutral-muted: #31312e;
+	--demo-neutral-subtle: #222221;
+	--demo-neutral-fg: #eeeeec;
+	--demo-neutral-fg-muted: #a9a9a3;
+	--demo-neutral-contrast: white;
+	--demo-neutral-focus-ring: #62605b;
+
+	/* Border dark mode */
+	--demo-border: #2a2a28;
+	--demo-border-muted: #191918;
+	--demo-border-emphasized: #3b3a37;
+
+	/* Error dark mode */
+	--demo-error: #ff4444;
+
+	/* Popover dark mode */
+	--demo-bg-popover: #111110;
+	--demo-bg-thumb: #111110;
+	--demo-bg-checkbox: #111110;
+
+	/* Shadow tokens dark mode (slightly higher opacity for visibility) */
+	--demo-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
+	--demo-shadow-sm:
+		0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.15);
+	--demo-shadow-md:
+		0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.12);
+	--demo-shadow-lg:
+		0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+	--demo-shadow-xl:
+		0 20px 25px -5px rgb(0 0 0 / 0.25), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+	--demo-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.35);
+
+	/* JSON tree view dark mode */
+	--demo-json-string: #ff7b72;
+	--demo-json-number: #79c0ff;
+	--demo-json-boolean: #ffa657;
+	--demo-json-key: #7ee787;
+	--demo-json-accent: #d2a8ff;
+}
+
 .dark {
 	--background: oklch(0.141 0.005 285.823);
 	--foreground: oklch(0.985 0 0);
@@ -154,56 +207,6 @@
 		}
 	}
 	.toast-root {
-		/* Coral dark mode */
-		--demo-coral-solid: #eb5e41;
-		--demo-coral-emphasized: #ef6b4e;
-		--demo-coral-muted: #722b25;
-		--demo-coral-subtle: #55221e;
-		--demo-coral-fg: #f47a5c;
-		--demo-coral-contrast: white;
-		--demo-coral-focus-ring: #e2503f;
-
-		/* Neutral dark mode (Sand from park-ui) */
-		--demo-neutral-solid: #6f6d66;
-		--demo-neutral-emphasized: #7c7b74;
-		--demo-neutral-muted: #31312e;
-		--demo-neutral-subtle: #222221;
-		--demo-neutral-fg: #eeeeec;
-		--demo-neutral-fg-muted: #a9a9a3;
-		--demo-neutral-contrast: white;
-		--demo-neutral-focus-ring: #62605b;
-
-		/* Border dark mode */
-		--demo-border: #2a2a28;
-		--demo-border-muted: #191918;
-		--demo-border-emphasized: #3b3a37;
-
-		/* Error dark mode */
-		--demo-error: #ff4444;
-
-		/* Popover dark mode */
-		--demo-bg-popover: #111110;
-		--demo-bg-thumb: #111110;
-		--demo-bg-checkbox: #111110;
-
-		/* Shadow tokens dark mode (slightly higher opacity for visibility) */
-		--demo-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
-		--demo-shadow-sm:
-			0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.15);
-		--demo-shadow-md:
-			0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.12);
-		--demo-shadow-lg:
-			0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-		--demo-shadow-xl:
-			0 20px 25px -5px rgb(0 0 0 / 0.25), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-		--demo-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.35);
-
-		/* JSON tree view dark mode */
-		--demo-json-string: #ff7b72;
-		--demo-json-number: #79c0ff;
-		--demo-json-boolean: #ffa657;
-		--demo-json-key: #7ee787;
-		--demo-json-accent: #d2a8ff;
 		width: 100%;
 		min-width: 20rem;
 		display: flex;
