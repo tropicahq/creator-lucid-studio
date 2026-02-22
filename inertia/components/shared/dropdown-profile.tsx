@@ -95,7 +95,13 @@ const ProfileDropdown = ({ trigger, defaultOpen, align = "end" }: Props) => {
 
 				<DropdownMenuSeparator />*/}
 
-				<Form method="post" action="/id/logout">
+				<Form
+					disableWhileProcessing
+					className="inert:opacity-50 inert:pointer-events-none"
+					options={{ preserveScroll: true }}
+					method="post"
+					action="/id/logout"
+				>
 					{({ processing, submit }) => (
 						<DropdownMenuItem
 							variant="destructive"
