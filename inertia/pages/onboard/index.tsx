@@ -7,8 +7,9 @@ import { Form, Head } from "@inertiajs/react";
 import { XIcon } from "lucide-react";
 import MainLayout from "~/components/shared/layout/main-layout";
 import { Button } from "~/components/ui/button";
-import { Field, FieldError } from "~/components/ui/field";
+import { Field, FieldError, FieldLabel } from "~/components/ui/field";
 import { Spinner } from "~/components/ui/spinner";
+import { Textarea } from "~/components/ui/textarea";
 import styles from "~/css/tag-input.module.css";
 
 const nicheCollection = createListCollection({
@@ -68,12 +69,15 @@ const audienceCollection = createListCollection({
 	],
 });
 export default function Onboard(props: DefaultPageProps) {
-	const nicheSelection = useListSelection({ collection: nicheCollection });
+	const nicheSelection = useListSelection({
+		collection: nicheCollection,
+		selectionMode: "multiple",
+	});
 
 	const tagsInput = useTagsInput({
 		max: 5,
 		maxLength: 20,
-		name: "audience",
+		name: "audienceSegments",
 	});
 	const audienceTagsSelection = useListSelection({
 		collection: audienceCollection,
@@ -118,26 +122,33 @@ export default function Onboard(props: DefaultPageProps) {
 										Select the primary categories for your content. You can
 										choose multiple.
 									</p>
-									<div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+									<Field data-invalid={form.invalid("primaryNiche")}>
+										<div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+											{nicheCollection.items.map((item) => (
+												<NicheCardItem
+													onSelect={() => {
+														nicheSelection.select(item.title);
+													}}
+													selected={
+														nicheSelection.isSelected(item.title) || undefined
+													}
+													valid={form.invalid("primaryNiche")}
+													key={item.title}
+													{...item}
+												/>
+											))}
+										</div>
 										<input
-											name="niche"
+											name="primaryNiche"
 											type="text"
 											hidden
-											value={nicheSelection.selectedValues[0]}
+											value={nicheSelection.selectedValues}
+											readOnly
 										/>
-										{nicheCollection.items.map((item) => (
-											<NicheCardItem
-												onSelect={() => {
-													nicheSelection.select(item.title);
-												}}
-												selected={
-													nicheSelection.isSelected(item.title) || undefined
-												}
-												key={item.title}
-												{...item}
-											/>
-										))}
-									</div>
+										{form.invalid("primaryNiche") && (
+											<FieldError>{form.errors.primaryNiche}</FieldError>
+										)}
+									</Field>
 								</section>
 								{/*<!-- Section 2: Target Audience -->*/}
 								<section className="sm:rounded-xl sm:border border-y border-slate-200  bg-white  py-8 md:px-8 px-5 shadow-sm">
@@ -183,11 +194,11 @@ export default function Onboard(props: DefaultPageProps) {
 											/>
 										))}
 									</div>
-									<Field data-invalid={form.invalid("audience")}>
+									<Field data-invalid={form.invalid("audienceSegments")}>
 										<TagsInput.RootProvider
 											className={styles.Root}
 											value={tagsInput}
-											aria-invalid={form.invalid("audience")}
+											aria-invalid={form.invalid("audienceSegments")}
 										>
 											<TagsInput.Context>
 												{(api) => (
@@ -241,8 +252,32 @@ export default function Onboard(props: DefaultPageProps) {
 											</TagsInput.Context>
 											<TagsInput.HiddenInput />
 										</TagsInput.RootProvider>
-										{form.invalid("audience") && (
-											<FieldError>{form.errors.audience}</FieldError>
+										{form.invalid("audienceSegments") && (
+											<FieldError>{form.errors.audienceSegments}</FieldError>
+										)}
+									</Field>
+								</section>
+								{/*<!-- Section 3: Bio -->*/}
+								<section className="sm:rounded-xl sm:border border-y border-slate-200  bg-white  py-8 md:px-8 px-5 shadow-sm">
+									<div className="flex items-center gap-4 mb-6">
+										<span className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+											3
+										</span>
+										<h2 className="text-xl font-bold tracking-tight">Bio</h2>
+									</div>
+									<p className="mb-6 text-slate-500">
+										We will use this information to create a personalized
+										experience for you.
+									</p>
+									<Field data-invalid={form.invalid("socialBio")}>
+										<FieldLabel>Biography / Account Description</FieldLabel>
+										<Textarea
+											name="socialBio"
+											aria-invalid={form.invalid("socialBio")}
+											placeholder="Enter a valid description of your social media profile"
+										/>
+										{form.invalid("socialBio") && (
+											<FieldError>{form.errors.socialBio}</FieldError>
 										)}
 									</Field>
 								</section>
@@ -285,16 +320,19 @@ function NicheCardItem({
 	description,
 	onSelect,
 	selected,
+	valid,
 }: {
 	mdIcon: string;
 	title: string;
 	description: string;
 	selected?: boolean;
 	onSelect: () => void;
+	valid: boolean;
 }) {
 	return (
 		<label
-			className="group relative flex cursor-pointer flex-col gap-3 rounded-md border border-slate-200 p-5 transition-all hover:border-primary card-selected"
+			data-invalid={valid}
+			className="group relative flex cursor-pointer flex-col gap-3 rounded-md border border-slate-200 p-5 transition-all hover:border-primary card-selected data-[invalid=true]:border-red-500"
 			data-selected={selected}
 		>
 			<input
@@ -309,7 +347,10 @@ function NicheCardItem({
 			/>
 
 			<div>
-				<h3 className="font-bold" dangerouslySetInnerHTML={{ __html: title }} />
+				<h3
+					className="font-bold text-black"
+					dangerouslySetInnerHTML={{ __html: title }}
+				/>
 				<p
 					className="text-xs text-slate-500"
 					dangerouslySetInnerHTML={{ __html: description }}

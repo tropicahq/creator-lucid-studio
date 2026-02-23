@@ -20,6 +20,8 @@ const AuthController = () => import("#controllers/auth_controller");
 const HealthChecksController = () =>
 	import("#controllers/health_checks_controller");
 // openapi.registerRoutes();
+const OnboardController = () => import("#controllers/onboard_controller");
+
 router.get("/health", [HealthChecksController]);
 transmit.registerRoutes((route) => {
 	// Ensure you are authenticated to register your client
@@ -34,9 +36,7 @@ transmit.registerRoutes((route) => {
 router
 	.group(() => {
 		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
-		router
-			.post("/onboard", [UsersController, "onboardUser"])
-			.middleware(throttle);
+		router.post("/onboard", [OnboardController]).middleware(throttle);
 	})
 	.middleware([middleware.auth()]);
 router.jobs();

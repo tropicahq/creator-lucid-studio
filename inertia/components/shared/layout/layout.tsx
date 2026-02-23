@@ -1,3 +1,4 @@
+// https://github.com/orgs/adonisjs/discussions/5023
 import { Portal } from "@ark-ui/react/portal";
 import { createToaster, Toast, Toaster } from "@ark-ui/react/toast";
 import { XIcon } from "lucide-react";
@@ -9,7 +10,7 @@ const toaster = createToaster({
 	gap: 16,
 });
 
-export default function Layout({ children, flash }: LayoutProps) {
+export default function BaseLayout({ children, flash }: LayoutProps) {
 	useEffect(() => {
 		if (flash.success) {
 			queueMicrotask(() => {

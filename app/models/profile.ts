@@ -11,10 +11,10 @@ export default class Profile extends BaseModel {
 	declare userId: number;
 
 	@column()
-	declare primaryNiche: string[];
+	declare primaryNiche: string;
 
 	@column()
-	declare audienceSegments: string[];
+	declare audienceSegments: string;
 
 	@column()
 	declare socialBio: string;
