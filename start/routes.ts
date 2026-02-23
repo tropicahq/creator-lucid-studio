@@ -43,9 +43,8 @@ router.jobs();
 router
 	.group(() => {
 		router.on("/signup").renderInertia("id/signup").as("signup");
-		router
-			.post("/signup", [UsersController, "createUser"])
-			.middleware(throttle);
+		router.post("/signup", [UsersController, "createUser"]);
+		// .middleware(throttle);
 		router
 			.on("/login")
 			.renderInertia("id/login")

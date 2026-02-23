@@ -183,10 +183,11 @@ export default function Onboard(props: DefaultPageProps) {
 											/>
 										))}
 									</div>
-									<Field>
+									<Field data-invalid={form.invalid("audience")}>
 										<TagsInput.RootProvider
 											className={styles.Root}
 											value={tagsInput}
+											aria-invalid={form.invalid("audience")}
 										>
 											<TagsInput.Context>
 												{(api) => (

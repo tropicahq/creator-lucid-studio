@@ -14,23 +14,20 @@ export default class AuthController {
 		logger,
 	}: HttpContext) {
 		const payload = await request.validateUsing(idLoginValidator);
-		try {
-			const user = await User.verifyCredentials(
-				payload.email,
-				payload.password,
-			);
-			if (user) {
-				await auth.use("web").login(user);
-				return response.redirect().status(301).toRoute("dashboard");
-			} else {
-				session.flash("error", "Invalid email or password");
-				return response.redirect("/id/login");
-			}
-		} catch (error) {
-			logger.error(error);
-			session.flash("error", "An error occurred.");
-			return response.redirect("/id/login");
+		// try {
+		const user = await User.verifyCredentials(payload.email, payload.password);
+		if (user) {
+			await auth.use("web").login(user);
+			return response.redirect().status(301).toRoute("dashboard");
+		} else {
+			session.flash("error", "Invalid email or password");
+			return response.redirect().back();
 		}
+		// } catch (error) {
+		// 	logger.error(error);
+		// 	session.flash("error", "An error occurred.");
+		// 	return response.redirect("/id/login");
+		// }
 	}
 	// public async signup({ request, response }: HttpContext) {
 	//   const { name, email, password } = request.only(['name', 'email', 'password']);

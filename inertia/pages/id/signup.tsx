@@ -55,8 +55,12 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 			onSubmit={handleSubmit}
 			className={cn("flex flex-col gap-6", className)}
 			{...props}
+			autoComplete="off"
 		>
-			<FieldGroup className="gap-5">
+			<FieldGroup
+				data-invalid={form.hasErrors}
+				className="gap-5 data-[invalid=true]:gap-4"
+			>
 				<div className="flex gap-1">
 					<h1 className="text-2xl font-semibold">Sign up</h1>
 					{/*<p className="text-muted-foreground text-sm text-balance">
@@ -64,26 +68,30 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 					</p>*/}
 				</div>
 				<FieldGroup className="grid md:grid-cols-2 grid-cols-1 max-w-full">
-					<Field>
+					<Field data-invalid={!!form.errors.fullName}>
 						<FieldLabel htmlFor="name">Full name</FieldLabel>
 						<Input
 							id="name"
 							disabled={form.processing}
 							type="text"
 							onChange={(e) => form.setData("fullName", e.target.value)}
+							value={form.data.fullName}
 							placeholder="Your full name"
+							aria-invalid={!!form.errors.fullName}
 							required
 						/>
 						{form.errors.fullName && (
 							<FieldError>{form.errors.fullName}</FieldError>
 						)}
 					</Field>
-					<Field>
+					<Field data-invalid={!!form.errors.userName}>
 						<FieldLabel htmlFor="user_name">User name</FieldLabel>
 						<Input
 							id="user_name"
 							type="text"
+							value={form.data.userName}
 							disabled={form.processing}
+							aria-invalid={!!form.errors.userName}
 							onChange={(e) => form.setData("userName", e.target.value)}
 							placeholder="Your user name"
 							required
@@ -93,12 +101,14 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 						)}
 					</Field>
 				</FieldGroup>
-				<Field>
+				<Field data-invalid={!!form.errors.email}>
 					<FieldLabel htmlFor="email">Email</FieldLabel>
 					<Input
 						id="email"
 						type="email"
+						value={form.data.email}
 						disabled={form.processing}
+						aria-invalid={!!form.errors.email}
 						onChange={(e) => form.setData("email", e.target.value)}
 						placeholder="Your email address"
 						required
@@ -109,11 +119,16 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 						with anyone else.
 					</FieldDescription>*/}
 				</Field>
-				<Field>
+				<Field data-invalid={!!form.errors.password}>
 					<FieldLabel htmlFor="password">Password</FieldLabel>
+					<FieldDescription>
+						Must be at least 8 characters long.
+					</FieldDescription>
 					<ButtonGroup>
 						<Input
+							value={form.data.password}
 							id="password"
+							aria-invalid={!!form.errors.password}
 							disabled={form.processing}
 							type={showPassword ? "text" : "password"}
 							onChange={(e) => form.setData("password", e.target.value)}
@@ -134,9 +149,6 @@ function SignupForm({ className, ...props }: React.ComponentProps<"form">) {
 					{form.errors.password && (
 						<FieldError>{form.errors.password}</FieldError>
 					)}
-					<FieldDescription>
-						Must be at least 8 characters long.
-					</FieldDescription>
 				</Field>
 				{/*<Field>
 					<FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>

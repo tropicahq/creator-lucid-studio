@@ -1,3 +1,4 @@
+import { errors as authErrors } from "@adonisjs/auth";
 import { ExceptionHandler, type HttpContext } from "@adonisjs/core/http";
 import app from "@adonisjs/core/services/app";
 import type {
@@ -49,6 +50,17 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
 			// return ctx.response.status(error.status).send(message);
 			return ctx.response.redirect().back();
+		}
+		if (
+			error instanceof authErrors.E_INVALID_CREDENTIALS ||
+			error instanceof authErrors.E_UNAUTHORIZED_ACCESS
+		) {
+			const message = error.getResponseMessage(error, ctx);
+			// const headers = error.
+			ctx.session.flash("error", message);
+
+			// return ctx.response.status(error.status).send(message);
+			return ctx.response.redirect().toRoute("login");
 		}
 		return super.handle(error, ctx);
 	}

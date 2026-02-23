@@ -55,25 +55,30 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 		<form
 			onSubmit={handleSubmit}
 			className={cn("flex flex-col gap-6", className)}
+			autoComplete="off"
 			{...props}
 		>
-			<FieldGroup className="gap-5">
+			<FieldGroup
+				data-invalid={form.hasErrors}
+				className="gap-5 data-[invalid=true]:gap-4"
+			>
 				<div className="flex gap-1">
 					<h1 className="text-2xl font-semibold">Sign in</h1>
 				</div>
-				<Field>
+				<Field data-invalid={!!form.errors.email}>
 					<FieldLabel htmlFor="email">Email</FieldLabel>
 					<Input
 						id="email"
 						disabled={form.processing}
 						type="email"
+						aria-invalid={!!form.errors.email}
 						onChange={(e) => form.setData("email", e.target.value)}
 						placeholder="Your email address"
 						required
 					/>
 					{form.errors.email && <FieldError>{form.errors.email}</FieldError>}
 				</Field>
-				<Field>
+				<Field data-invalid={!!form.errors.password}>
 					<div className="flex justify-between items-center w-full">
 						<FieldLabel htmlFor="password">Password</FieldLabel>
 						<Link
@@ -88,13 +93,14 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 						</Link>
 					</div>
 
-					<ButtonGroup>
+					<ButtonGroup aria-invalid={!!form.errors.password}>
 						<Input
 							id="password"
 							disabled={form.processing}
 							onChange={(e) => form.setData("password", e.target.value)}
 							type={showPassword ? "text" : "password"}
 							placeholder="Your password"
+							aria-invalid={!!form.errors.password}
 							required
 						/>
 						<Button
