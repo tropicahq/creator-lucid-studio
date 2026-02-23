@@ -17,23 +17,23 @@ import { Input } from "~/components/ui/input";
 import { Spinner } from "~/components/ui/spinner";
 import { cn } from "~/lib/utils";
 
-const Sigin = (props: DefaultPageProps) => {
+const Signin = (props: DefaultPageProps) => {
 	return (
 		<AuthLayout {...props}>
 			<Head title="Sig in" />
 			<div className="flex flex-1 md:items-center justify-center">
 				<div className="w-full max-w-md">
-					<SiginForm noValidate={true} />
+					<SigninForm noValidate={true} />
 				</div>
 			</div>
 		</AuthLayout>
 	);
 };
-// Sigin.layout = ({ key, ...props }: any) => <AuthLayout key={key} {...props} />;
+// Signin.layout = ({ key, ...props }: any) => <AuthLayout key={key} {...props} />;
 
-export default Sigin;
+export default Signin;
 
-function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
+function SigninForm({ className, ...props }: React.ComponentProps<"form">) {
 	const [showPassword, setShowPassword] = useState(false);
 	const form = useForm({
 		email: "",
@@ -46,7 +46,8 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 		form.post("/id/login", {
 			preserveScroll: true,
 			onSuccess: (x) => {
-				// form.reset();
+				const error = !!x.props.flash?.error;
+				if (!error) form.reset();
 			},
 		});
 	};
@@ -71,6 +72,7 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 						id="email"
 						disabled={form.processing}
 						type="email"
+						value={form.data.email}
 						aria-invalid={!!form.errors.email}
 						onChange={(e) => form.setData("email", e.target.value)}
 						placeholder="Your email address"
@@ -82,7 +84,7 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 					<div className="flex justify-between items-center w-full">
 						<FieldLabel htmlFor="password">Password</FieldLabel>
 						<Link
-							href={"/id/reset-password"}
+							href={"/id/forgot-password"}
 							className={cn(
 								"text-muted-foreground text-left text-sm leading-normal font-normale",
 								"mt-0",
@@ -97,6 +99,7 @@ function SiginForm({ className, ...props }: React.ComponentProps<"form">) {
 						<Input
 							id="password"
 							disabled={form.processing}
+							value={form.data.password}
 							onChange={(e) => form.setData("password", e.target.value)}
 							type={showPassword ? "text" : "password"}
 							placeholder="Your password"

@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "node bin/server.js",
 		"build": "node ace build",
-		"dev": "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"node ace jobs:listen --queue=analysis,media-pipeline\" \"node ace serve --hmr\" --names=queue,server --kill-others",
+		"dev": "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"node ace jobs:listen --queue=default,analysis,media-pipeline\" \"node ace serve --hmr\" --names=queue,server --kill-others",
 		"test": "node ace test",
 		"lint": "biome check",
 		"format": "biome format --write ",

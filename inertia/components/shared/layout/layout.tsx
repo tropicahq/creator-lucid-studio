@@ -1,4 +1,3 @@
-// import { ToastContainer, toast } from "react-toastify/unstyled";
 import { Portal } from "@ark-ui/react/portal";
 import { createToaster, Toast, Toaster } from "@ark-ui/react/toast";
 import { XIcon } from "lucide-react";
@@ -10,42 +9,26 @@ const toaster = createToaster({
 	gap: 16,
 });
 
-export default function Layout({ children, flashMessage }: LayoutProps) {
+export default function Layout({ children, flash }: LayoutProps) {
 	useEffect(() => {
-		if (flashMessage.success) {
-			// toast(flashMessage.success, {
-			// 	type: "success",
-			// 	autoClose: 4000,
-			// 	position: "top-right",
-			// 	theme: "dark",
-			// 	draggable: false,
-			// 	pauseOnHover: false,
-			// });
+		if (flash.success) {
 			queueMicrotask(() => {
 				toaster.create({
 					type: "info",
 					title: "Notification",
-					description: flashMessage.success ?? "",
+					description: flash.success ?? "",
 				});
 			});
-		} else if (flashMessage.error) {
+		} else if (flash.error) {
 			queueMicrotask(() => {
 				toaster.create({
 					type: "info",
 					title: "Notification",
-					description: flashMessage.error ?? "",
+					description: flash.error ?? "",
 				});
 			});
-			// toast(flashMessage.error, {
-			// 	type: "error",
-			// 	autoClose: 4000,
-			// 	position: "top-right",
-			// 	theme: "dark",
-			// 	draggable: false,
-			// 	pauseOnHover: false,
-			// });
 		}
-	}, [flashMessage]);
+	}, [flash]);
 	return (
 		<>
 			{children}

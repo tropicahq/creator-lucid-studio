@@ -56,6 +56,16 @@ router
 			.middleware(throttle);
 
 		router
+			.on("/forgot-password")
+			.renderInertia("id/forgot-password")
+			.as("forgot-password")
+			.middleware(middleware.guest());
+		router
+			.post("/forgot-password", [AuthController, "forgotPassword"])
+			.middleware([middleware.guest()])
+			.middleware(throttle);
+
+		router
 			.post("/logout", [AuthController, "logout"])
 			.as("logout")
 			.middleware([throttle, middleware.auth()]);

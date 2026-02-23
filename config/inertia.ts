@@ -14,11 +14,7 @@ const inertiaConfig = defineConfig({
 	 * Data that should be shared with all rendered pages
 	 */
 	sharedData: {
-		flashMessage: (ctx) =>
-			ctx.inertia.always(() => ({
-				error: ctx.session.flashMessages.get("error"),
-				success: ctx.session.flashMessages.get("success"),
-			})),
+		flash: (ctx) => ctx.inertia.always(() => ctx.session?.flashMessages.all()),
 		appName: env.get("APP_NAME"),
 		isOnboarded: (ctx) =>
 			ctx.inertia.always(async () => {

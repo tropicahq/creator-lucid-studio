@@ -7,7 +7,8 @@ export const idCreateUserValidator = vine.compile(
 			.string()
 			.trim()
 			.email()
-			.unique({ column: "email", table: "users" }),
+			.toLowerCase()
+			.unique({ column: "email", table: "users", caseInsensitive: true }),
 		password: vine.string().minLength(8).maxLength(100),
 	}),
 );
@@ -24,7 +25,8 @@ export const idLoginValidator = vine.compile(
 			.string()
 			.trim()
 			.email()
-			.exists({ column: "email", table: "users" }),
+			.toLowerCase()
+			.exists({ column: "email", table: "users", caseInsensitive: true }),
 		password: vine.string().minLength(8).maxLength(100),
 	}),
 );

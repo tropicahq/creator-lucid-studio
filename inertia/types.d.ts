@@ -1,5 +1,5 @@
 type DefaultPageProps = {
-	flashMessage: { error?: string; success?: string };
+	flash: { error?: string; success?: string };
 	appName: string;
 	isOnboarded: boolean;
 };
