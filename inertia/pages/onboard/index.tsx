@@ -187,9 +187,6 @@ export default function Onboard(props: DefaultPageProps) {
 										<TagsInput.RootProvider
 											className={styles.Root}
 											value={tagsInput}
-
-											// max={10}
-											// maxLength={20}
 										>
 											<TagsInput.Context>
 												{(api) => (

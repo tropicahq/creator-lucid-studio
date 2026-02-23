@@ -7,6 +7,7 @@
 |
 */
 import router from "@adonisjs/core/services/router";
+import transmit from "@adonisjs/transmit/services/main";
 import { middleware } from "./kernel.js";
 import { throttle } from "./limiter.js";
 
@@ -16,7 +17,20 @@ import { throttle } from "./limiter.js";
 const UsersController = () => import("#controllers/users_controller");
 const AuthController = () => import("#controllers/auth_controller");
 
+const HealthChecksController = () =>
+	import("#controllers/health_checks_controller");
 // openapi.registerRoutes();
+router.get("/health", [HealthChecksController]);
+transmit.registerRoutes((route) => {
+	// Ensure you are authenticated to register your client
+	if (route.getPattern() === "__transmit/events") {
+		route.middleware(middleware.auth());
+		return;
+	}
+
+	// Add a throttle middleware to other transmit routes
+	route.use(throttle);
+});
 router
 	.group(() => {
 		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
