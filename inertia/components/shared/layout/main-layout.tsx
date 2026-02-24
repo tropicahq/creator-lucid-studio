@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { ChartColumnStacked } from "lucide-react";
 import Profile from "#models/profile";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
@@ -11,7 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { getInitials } from "~/lib/utils";
+import { cn, getInitials } from "~/lib/utils";
 import {
 	NavigationMenu,
 	NavigationMenuItem,
@@ -58,11 +58,12 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 					{/**/}
 					<div className="flex items-center gap-1.5">
 						<ProfileDropdown
-							trigger={
+							trigger={(props, _) => (
 								<Button
 									variant={"ghost"}
 									size={"icon"}
-									className="size-9 rounded-full"
+									{...props}
+									className={cn(props.className, "size-9 rounded-full")}
 								>
 									<Avatar className={"size-9"}>
 										<AvatarFallback>
@@ -70,7 +71,7 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 										</AvatarFallback>
 									</Avatar>
 								</Button>
-							}
+							)}
 						/>
 					</div>
 				</div>
@@ -80,10 +81,14 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 					<NavigationMenu>
 						<NavigationMenuList>
 							<NavigationMenuItem>
-								<NavigationMenuLink href="/dashboard">
-									{" "}
-									<ChartColumnStacked /> Dashboard
-								</NavigationMenuLink>
+								<NavigationMenuLink
+									render={(props, _) => (
+										<Link className={props.className} href={"/"}>
+											{" "}
+											<ChartColumnStacked /> Dashboard
+										</Link>
+									)}
+								/>
 							</NavigationMenuItem>
 						</NavigationMenuList>
 					</NavigationMenu>

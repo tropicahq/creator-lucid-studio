@@ -1,3 +1,8 @@
+import type {
+	ComponentRenderFn,
+	HTMLProps,
+	NavigationMenuLinkState,
+} from "@base-ui/react";
 import { Form, usePage } from "@inertiajs/react";
 import {
 	CirclePlusIcon,
@@ -9,7 +14,6 @@ import {
 	UsersIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
 	DropdownMenu,
@@ -24,7 +28,10 @@ import { getInitials } from "~/lib/utils";
 import { Button } from "../ui/button";
 
 type Props = {
-	trigger: ReactElement;
+	trigger:
+		| React.ReactElement<unknown, string | React.JSXElementConstructor<any>>
+		| ComponentRenderFn<HTMLProps<any>, NavigationMenuLinkState>
+		| undefined;
 	defaultOpen?: boolean;
 	align?: "start" | "center" | "end";
 };

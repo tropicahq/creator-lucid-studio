@@ -6,6 +6,7 @@ export const onboardingValidator = vine.compile(
 		primaryNiche: vine.string().trim(),
 		audienceSegments: vine.string().trim(),
 		socialBio: vine.string().trim(),
+		mainGoal: vine.string().trim(),
 	}),
 );
 
@@ -13,10 +14,12 @@ onboardingValidator.messagesProvider = new SimpleMessagesProvider(
 	{
 		"primaryNiche.required": "You must select at least one {{field}}",
 		"audienceSegments.required": "You must select at least one {{field}}",
+		"mainGoal.required": "You must select an {{field}}",
 	},
 	{
 		primaryNiche: "Primary niche",
 		audienceSegments: "Target audience",
 		socialBio: "Social bio",
+		mainGoal: "Overall goal",
 	},
 );

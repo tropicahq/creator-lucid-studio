@@ -33,12 +33,7 @@ transmit.registerRoutes((route) => {
 	// Add a throttle middleware to other transmit routes
 	route.use(throttle);
 });
-router
-	.group(() => {
-		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
-		router.post("/onboard", [OnboardController]).middleware(throttle);
-	})
-	.middleware([middleware.auth()]);
+
 router.jobs();
 router
 	.group(() => {
@@ -71,12 +66,17 @@ router
 			.middleware([throttle, middleware.auth()]);
 	})
 	.prefix("id");
-
+router
+	.group(() => {
+		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
+		router.post("/onboard", [OnboardController]).middleware(throttle);
+	})
+	.middleware([middleware.auth()]);
 router
 	.group(() => {
 		router.on("/").renderInertia("home").as("dashboard");
 	})
-	.middleware([middleware.auth(), middleware.ensureOnboardPass()]);
+	.middleware([middleware.auth()]);
 
 // router.post("/create-post-analysis", [
 // 	JobAnalysisManagersController,

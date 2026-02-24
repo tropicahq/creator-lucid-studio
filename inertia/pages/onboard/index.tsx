@@ -1,3 +1,4 @@
+import { describe } from "node:test";
 import {
 	createListCollection,
 	useListSelection,
@@ -5,12 +6,16 @@ import {
 import { TagsInput, useTagsInput } from "@ark-ui/react/tags-input";
 import { Form, Head } from "@inertiajs/react";
 import { XIcon } from "lucide-react";
+import party from "party-js";
+import { useRef } from "react";
+import { MotionButton } from "~/components/motion_ui/button";
 import MainLayout from "~/components/shared/layout/main-layout";
 import { Button } from "~/components/ui/button";
 import { Field, FieldError, FieldLabel } from "~/components/ui/field";
 import { Spinner } from "~/components/ui/spinner";
 import { Textarea } from "~/components/ui/textarea";
 import styles from "~/css/tag-input.module.css";
+import { cn } from "~/lib/utils";
 
 const nicheCollection = createListCollection({
 	items: [
@@ -68,12 +73,38 @@ const audienceCollection = createListCollection({
 		},
 	],
 });
+
+const goalCollection = createListCollection({
+	items: [
+		{
+			value: "Growth",
+			mostPopular: false,
+			description: "Gain more followers and increase reach.",
+			mdIcon: "trending_up",
+		},
+		{
+			value: "Engagement",
+			mostPopular: true,
+			description: "Boost likes and comments etc.",
+			mdIcon: "auto_awesome",
+		},
+		{
+			value: "Conversion",
+			mostPopular: false,
+			description: "Drive traffic to links and sales.",
+			mdIcon: "shopping_cart",
+		},
+	],
+});
+
 export default function Onboard(props: DefaultPageProps) {
 	const nicheSelection = useListSelection({
 		collection: nicheCollection,
 		selectionMode: "multiple",
 	});
-
+	const goalSelection = useListSelection({
+		collection: goalCollection,
+	});
 	const tagsInput = useTagsInput({
 		max: 5,
 		maxLength: 20,
@@ -83,6 +114,7 @@ export default function Onboard(props: DefaultPageProps) {
 		collection: audienceCollection,
 		selectionMode: "multiple",
 	});
+	const continueButton = useRef<HTMLButtonElement>(null);
 	return (
 		<MainLayout {...props}>
 			<Head title="Get Started" />
@@ -92,11 +124,26 @@ export default function Onboard(props: DefaultPageProps) {
 				disableWhileProcessing
 				className="inert:opacity-50 inert:pointer-events-none"
 				resetOnSuccess
+				onSuccess={(x) => {
+					const error = !!x.props.flash?.error;
+					if (!error) {
+						nicheSelection.clear();
+						goalSelection.clear();
+						audienceTagsSelection.clear();
+						tagsInput.clearValue();
+						party.confetti(document.body, {
+							count: 250,
+							size: 1.1,
+							spread: 70,
+							// ... and more!
+						});
+					}
+				}}
 				options={{ preserveScroll: true }}
 			>
 				{(form) => (
 					<>
-						<div className="mx-auto max-w-210 py-12 lg:px-20">
+						<div className="mx-auto max-w-230 py-12 lg:px-20">
 							<div className="mb-11 text-center">
 								<h1 className="text-4xl font-black tracking-tight mb-4">
 									Complete Your Profile
@@ -281,6 +328,85 @@ export default function Onboard(props: DefaultPageProps) {
 										)}
 									</Field>
 								</section>
+								{/*<!-- Section 4: Overall Goal -->*/}
+								<section className="sm:rounded-xl sm:border border-y border-slate-200  bg-white  py-8 md:px-8 px-5 shadow-sm">
+									<div className="flex items-center gap-4 mb-6">
+										<span className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+											4
+										</span>
+										<h2 className="text-xl font-bold tracking-tight">
+											Overall Goal
+										</h2>
+									</div>
+									<p className="mb-6 text-slate-500">
+										What is the most important outcome for your account right
+										now?
+									</p>
+									<Field data-invalid={form.invalid("mainGoal")}>
+										<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+											{goalCollection.items.map((goal, index) => (
+												<label
+													key={index}
+													data-most-popular={goal.mostPopular}
+													data-selected={goalSelection.isSelected(goal.value)}
+													className="flex flex-col items-center p-6 text-center border border-slate-100 data-[selected=true]:border-primary rounded-md hover:border-primary data-[selected=false]:transition-all cursor-pointer data-[selected=false]:bg-slate-50/50 data-[most-popular=true]:relative"
+													htmlFor={`goal-${goal.value}`}
+												>
+													<div
+														data-most-popular={goal.mostPopular}
+														className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-black uppercase px-2 py-0.5 rounded tracking-wider"
+													>
+														Most Popular
+													</div>
+													<input
+														type="checkbox"
+														hidden
+														id={`goal-${goal.value}`}
+														onChange={() => {
+															goalSelection.select(goal.value);
+														}}
+														checked={
+															goalSelection.isSelected(goal.value) || undefined
+														}
+													/>
+													<div className="mb-4 flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+														<span
+															dangerouslySetInnerHTML={{ __html: goal.mdIcon }}
+															className="material-symbols-outlined text-3xl"
+														/>
+													</div>
+													<h3
+														className="text-lg font-bold mb-2 text-black"
+														dangerouslySetInnerHTML={{ __html: goal.value }}
+													/>
+													<p
+														dangerouslySetInnerHTML={{
+															__html: goal.description,
+														}}
+														className="text-sm text-slate-500"
+													/>
+													{/*{goalSelection.isSelected(goal.value) && (
+														<div className="mt-4 text-primary">
+															<span className="material-symbols-outlined">
+																check_circle
+															</span>
+														</div>
+													)}*/}
+												</label>
+											))}
+										</div>
+										<input
+											name="mainGoal"
+											type="text"
+											hidden
+											value={nicheSelection.selectedValues}
+											readOnly
+										/>
+										{form.invalid("mainGoal") && (
+											<FieldError>{form.errors.mainGoal}</FieldError>
+										)}
+									</Field>
+								</section>
 							</div>
 						</div>
 						{/*<!-- Sticky Footer CTA -->*/}
@@ -288,11 +414,12 @@ export default function Onboard(props: DefaultPageProps) {
 							<div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
 								<div className="flex flex-1 items-center justify-end gap-4">
 									<Button
+										ref={continueButton}
 										size={"lg"}
 										variant={"outline"}
 										type="submit"
 										disabled={form.processing}
-										className="flex items-center justify-center gap-3  px-8 py-4 text-sm font-black tracking-wide shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all"
+										className="flex items-center justify-center gap-3 px-8 py-4 text-sm font-black tracking-wide shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all"
 										onClick={form.submit}
 									>
 										{form.processing && <Spinner />}
@@ -332,7 +459,10 @@ function NicheCardItem({
 	return (
 		<label
 			data-invalid={valid}
-			className="group relative flex cursor-pointer flex-col gap-3 rounded-md border border-slate-200 p-5 transition-all hover:border-primary card-selected data-[invalid=true]:border-red-500"
+			className={cn(
+				"group relative flex cursor-pointer flex-col gap-3 rounded-md border border-slate-200 p-5 transition-all hover:border-primary card-selected ",
+				// "data-[invalid=true]:border-red-500"
+			)}
 			data-selected={selected}
 		>
 			<input

@@ -1,20 +1,14 @@
 import type { HttpContext } from "@adonisjs/core/http";
+import env from "#start/env";
 import { onboardingValidator } from "#validators/onboarding_validator";
 
 export default class OnboardController {
-	async handle({ request, response, session }: HttpContext) {
+	async handle({ request, response, session, auth }: HttpContext) {
 		const payload = await request.validateUsing(onboardingValidator);
-		// try {
-		// 	await User.create(payload);
-		// 	session.flash("success", "Your new account has been created 🎉!");
-		// 	return response.redirect("/id/login");
-		// } catch (error) {
-		// 	console.error(error);
-		// 	session.flash("error", "Failed to create user");
-		// 	return response.redirect().back();
-		// }
-		session.flash("success", "Nothing here for now!");
-		console.log(payload);
-		return response.redirect().back();
+		const user = auth.user;
+		await user?.related("profile").updateOrCreate(payload, payload);
+
+		session.flash("success", `Welcome ${env.get("APP_NAME")}!`);
+		return response.redirect().toRoute("dashboard");
 	}
 }

@@ -206,6 +206,7 @@
 			@apply border border-primary bg-[rgba(80,72,229,0.05)];
 		}
 	}
+
 	.toast-root {
 		width: 100%;
 		min-width: 20rem;
