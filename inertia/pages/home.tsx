@@ -7,6 +7,7 @@ export default function Home(props: DefaultPageProps) {
 			<Head title="Home" />
 			<div>
 				<h1>Welcome to {props.appName}</h1>
+				<p>Come back later, we're working on it!</p>
 			</div>
 		</MainLayout>
 	);

@@ -76,7 +76,7 @@ router
 	.group(() => {
 		router.on("/").renderInertia("home").as("dashboard");
 	})
-	.middleware([middleware.auth()]);
+	.middleware([middleware.auth(), middleware.ensureOnboardPass()]);
 
 // router.post("/create-post-analysis", [
 // 	JobAnalysisManagersController,
