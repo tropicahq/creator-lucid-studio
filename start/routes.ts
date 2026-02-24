@@ -71,7 +71,20 @@ router
 		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
 		router.post("/onboard", [OnboardController]).middleware(throttle);
 	})
-	.use([middleware.auth()]);
+	.use([
+		middleware.auth(),
+		async (ctx, next) => {
+			const user = ctx.auth.user;
+			if (user) {
+				await user.load("profile");
+				if (user.$preloaded.profile) {
+					return ctx.response.redirect().back();
+				} else {
+					await next();
+				}
+			}
+		},
+	]);
 router
 	.group(() => {
 		router.on("/").renderInertia("home").as("dashboard");
