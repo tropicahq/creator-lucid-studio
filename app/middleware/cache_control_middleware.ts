@@ -3,11 +3,10 @@ import type { NextFn } from "@adonisjs/core/types/http";
 
 export default class CacheControlMiddleware {
 	async handle(ctx: HttpContext, next: NextFn) {
-		await next();
 		ctx.response.header("Cache-Control", "no-cache, no-store, must-revalidate");
 		ctx.response.header("Pragma", "no-cache");
 		ctx.response.header("Expires", "0");
-
+		await next();
 		// /**
 		//  * Middleware logic goes here (before the next call)
 		//  */
