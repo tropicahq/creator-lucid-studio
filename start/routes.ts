@@ -71,12 +71,12 @@ router
 		router.on("/onboard").renderInertia("onboard/index").as("profile.onboard");
 		router.post("/onboard", [OnboardController]).middleware(throttle);
 	})
-	.middleware([middleware.auth()]);
+	.use([middleware.auth()]);
 router
 	.group(() => {
 		router.on("/").renderInertia("home").as("dashboard");
 	})
-	.middleware([middleware.auth(), middleware.ensureOnboardPass()]);
+	.use([middleware.auth()]);
 
 // router.post("/create-post-analysis", [
 // 	JobAnalysisManagersController,

@@ -12,9 +12,10 @@
 import limiter from "@adonisjs/limiter/services/main";
 import env from "./env.js";
 
-export const throttle = limiter.define("global", () => {
+export const throttle = limiter.define("global", (ctx) => {
 	const isProduction = env.get("NODE_ENV") === "production";
+	// ctx.request.matchesRoute("id/");
 	return limiter
-		.allowRequests(isProduction ? 2 : 100000000000000)
+		.allowRequests(isProduction ? 5 : 100000000000000)
 		.every("1 minute");
 });

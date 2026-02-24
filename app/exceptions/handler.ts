@@ -62,6 +62,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 			// return ctx.response.status(error.status).send(message);
 			return ctx.response.redirect().toRoute("login");
 		}
+		// ctx.session.flash("error", "An unexpected error occurred");
 		return super.handle(error, ctx);
 	}
 

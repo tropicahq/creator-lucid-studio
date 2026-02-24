@@ -123,7 +123,7 @@ export default function Onboard(props: DefaultPageProps) {
 				action={"/onboard"}
 				disableWhileProcessing
 				className="inert:opacity-50 inert:pointer-events-none"
-				resetOnSuccess
+				resetOnSuccess={false}
 				onSuccess={(x) => {
 					const error = !!x.props.flash?.error;
 					if (!error) {
@@ -349,7 +349,7 @@ export default function Onboard(props: DefaultPageProps) {
 													key={index}
 													data-most-popular={goal.mostPopular}
 													data-selected={goalSelection.isSelected(goal.value)}
-													className="flex flex-col items-center p-6 text-center border border-slate-100 data-[selected=true]:border-primary rounded-md hover:border-primary data-[selected=false]:transition-all cursor-pointer data-[selected=false]:bg-slate-50/50 data-[most-popular=true]:relative"
+													className="flex flex-col items-center p-6 text-center border-2 border-slate-100 data-[selected=true]:border-primary rounded-md hover:border-primary data-[selected=false]:transition-all cursor-pointer data-[selected=false]:bg-slate-50/50 data-[most-popular=true]:relative"
 													htmlFor={`goal-${goal.value}`}
 												>
 													<div
