@@ -12,7 +12,7 @@ export default class UsersController {
 		try {
 			await User.create(payload);
 			session.flash("success", "Your new account has been created 🎉!");
-			return response.redirect("/id/login");
+			return response.redirect().toRoute("login");
 		} catch (error) {
 			console.error(error);
 			session.flash("error", "Failed to create user");
