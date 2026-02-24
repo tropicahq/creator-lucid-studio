@@ -124,6 +124,9 @@ export default function Onboard(props: DefaultPageProps) {
 				disableWhileProcessing
 				className="inert:opacity-50 inert:pointer-events-none"
 				resetOnSuccess={false}
+				headers={{
+					"Cache-Control": "no-cache",
+				}}
 				onSuccess={(x) => {
 					const error = !!x.props.flash?.error;
 					if (!error) {
