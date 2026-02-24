@@ -1,6 +1,7 @@
 // https://github.com/orgs/adonisjs/discussions/5023
 import { Portal } from "@ark-ui/react/portal";
 import { createToaster, Toast, Toaster } from "@ark-ui/react/toast";
+import { router } from "@inertiajs/react";
 import { XIcon } from "lucide-react";
 import { useEffect } from "react";
 
@@ -9,26 +10,39 @@ const toaster = createToaster({
 	overlap: true,
 	gap: 16,
 });
-
+const FlashToastId = Symbol("FlashToastId");
 export default function BaseLayout({ children, flash }: LayoutProps) {
 	useEffect(() => {
-		if (flash.success) {
-			queueMicrotask(() => {
-				toaster.create({
-					type: "info",
-					title: "Notification",
-					description: flash.success ?? "",
+		// console.log(flash);
+		if ("success" in flash || "error" in flash) {
+			if (flash.success) {
+				Promise.resolve().then(() => {
+					toaster.create({
+						type: "info",
+						title: "Notification",
+						description: flash.success ?? "",
+						id: FlashToastId.toString(),
+					});
 				});
-			});
-		} else if (flash.error) {
-			queueMicrotask(() => {
-				toaster.create({
-					type: "info",
-					title: "Notification",
-					description: flash.error ?? "",
+			} else if (flash.error) {
+				Promise.resolve().then(() => {
+					toaster.create({
+						type: "info",
+						title: "Notification",
+						description: flash.error ?? "",
+						id: FlashToastId.toString(),
+					});
 				});
-			});
+			}
 		}
+		return () => {
+			const isToastVisible = toaster.isVisible(FlashToastId.toString());
+			if (isToastVisible) {
+				Promise.resolve().then(() => {
+					toaster.remove(FlashToastId.toString());
+				});
+			}
+		};
 	}, [flash]);
 	return (
 		<>

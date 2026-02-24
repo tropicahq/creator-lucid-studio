@@ -64,10 +64,10 @@ function ForgotPasswordForm({
 					<h1 className="text-2xl font-semibold">Forgot Password</h1>
 				</div>
 				<Field data-invalid={!!form.errors.email}>
-					<FieldLabel htmlFor="email">Email</FieldLabel>
+					<FieldLabel htmlFor="email">Email address</FieldLabel>
 					<FieldDescription>
-						If this email is associated with your account, you will receive a
-						password reset email.
+						Enter the email associated with your account and we’ll send you
+						password reset instructions
 					</FieldDescription>
 					<Input
 						id="email"
