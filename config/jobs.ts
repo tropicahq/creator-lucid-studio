@@ -10,7 +10,7 @@ const jobsConfig = defineConfig({
 
 	queue: env.get("REDIS_QUEUE", "default"),
 
-	queues: ["default", "high", "analysis", "media-pipeline"],
+	queues: ["default", "high", "emails", "analysis", "media-pipeline"],
 
 	options: {
 		/**

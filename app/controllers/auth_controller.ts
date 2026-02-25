@@ -3,9 +3,12 @@ import type { HttpContext } from "@adonisjs/core/http";
 import hash from "@adonisjs/core/services/hash";
 import redis from "@adonisjs/redis/services/main";
 import vine from "@vinejs/vine";
-import ResetPasswordMailQueue from "#jobs/reset_password_mail";
+import ResetPasswordQueue from "#jobs/reset_password_queue";
 import User from "#models/user";
-import { idLoginValidator } from "#validators/id_validator";
+import {
+	idLoginValidator,
+	idResetPasswordValidator,
+} from "#validators/id_validator";
 export default class AuthController {
 	// public async loginShow({ inertia }: HttpContext) {
 	// 	return inertia.render("id/login");
@@ -63,8 +66,8 @@ export default class AuthController {
 
 			const resetToken = crypto.randomBytes(32).toString("hex");
 			const hashedToken = await hash.use("scrypt").make(resetToken);
-			// await redis.set(email, crypto.randomBytes(32).toString('hex'), { ttl: 3600 })
-			await ResetPasswordMailQueue.dispatch(
+
+			await ResetPasswordQueue.dispatch(
 				{
 					email,
 					hashedToken,
@@ -81,16 +84,19 @@ export default class AuthController {
 			return response.redirect().back();
 		}
 	}
-	// public async resetPassword({ request, response }: HttpContext) {
-	//   const { token, password } = request.only(['token', 'password']);
-	//   try {
-	//     const user = await User.findByOrFail('token', token);
-	//     await user.update({
-	//       password,
-	//       token: null,
-	//     });
-	//     response.redirect('/id/login');
-	//   } catch (error) {
-	//     response.redirect('/id/reset-password');
-	//   }
+	public async resetPassword({ request, response, session }: HttpContext) {
+		const email = request.input("email");
+		console.log("[EMAIL]", email);
+		if (!email) {
+			session.flash("error", "Invalid expired reset token or email");
+			return response.status(301).redirect().toRoute("forgot-password");
+		}
+		const payload = await request.validateUsing(idResetPasswordValidator);
+		const user = await User.findByOrFail("email", email);
+
+		await user.merge(payload).save();
+		session.flash("success", "Password reset successful.");
+		await redis.del(`reset_token:${email}`);
+		return response.redirect().status(301).toRoute("login");
+	}
 }

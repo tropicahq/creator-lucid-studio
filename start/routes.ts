@@ -40,25 +40,30 @@ router
 		router.on("/signup").renderInertia("id/signup").as("signup");
 		router.post("/signup", [UsersController, "createUser"]);
 		// .middleware(throttle);
-		router
-			.on("/login")
-			.renderInertia("id/login")
-			.as("login")
-			.middleware(middleware.guest());
-		router
-			.post("/login", [AuthController, "login"])
-			.middleware([middleware.guest()])
-			.middleware(throttle);
 
 		router
-			.on("/forgot-password")
-			.renderInertia("id/forgot-password")
-			.as("forgot-password")
-			.middleware(middleware.guest());
-		router
-			.post("/forgot-password", [AuthController, "forgotPassword"])
-			.middleware([middleware.guest()])
-			.middleware(throttle);
+			.group(() => {
+				router.on("/login").renderInertia("id/login").as("login");
+				router.post("/login", [AuthController, "login"]).middleware(throttle);
+
+				router
+					.on("/forgot-password")
+					.renderInertia("id/forgot-password")
+					.as("forgot-password");
+				router
+					.post("/forgot-password", [AuthController, "forgotPassword"])
+					.middleware(throttle);
+
+				router
+					.on("/reset-password")
+					.renderInertia("id/reset-password")
+					.as("reset-password")
+					.use(middleware.verifyPasswordResetToken());
+				router
+					.post("/reset-password", [AuthController, "resetPassword"])
+					.middleware(throttle);
+			})
+			.use(middleware.guest());
 
 		router
 			.post("/logout", [AuthController, "logout"])

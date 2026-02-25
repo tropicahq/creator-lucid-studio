@@ -30,3 +30,10 @@ export const idLoginValidator = vine.compile(
 		password: vine.string().minLength(8).maxLength(100),
 	}),
 );
+
+export const idResetPasswordValidator = vine.compile(
+	vine.object({
+		// token: vine.string().trim(),
+		password: vine.string().minLength(8).maxLength(100),
+	}),
+);

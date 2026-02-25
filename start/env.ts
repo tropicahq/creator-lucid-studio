@@ -15,6 +15,7 @@ export default await Env.create(new URL("../", import.meta.url), {
 	NODE_ENV: Env.schema.enum(["development", "production", "test"] as const),
 	PORT: Env.schema.number(),
 	APP_KEY: Env.schema.string(),
+	APP_URL: Env.schema.string(),
 	APP_NAME: Env.schema.string(),
 	HOST: Env.schema.string({ format: "host" }),
 	LOG_LEVEL: Env.schema.string(),
@@ -45,9 +46,24 @@ export default await Env.create(new URL("../", import.meta.url), {
 	DENO_DEPLOY_TOKEN: Env.schema.string(),
 
 	/*
+|----------------------------------------------------------
+| Variables for configuring the limiter package
+|----------------------------------------------------------
+*/
+	LIMITER_STORE: Env.schema.enum(["redis", "memory"] as const),
+
+	/*
   |----------------------------------------------------------
-  | Variables for configuring the limiter package
+  | Variables for configuring the mail package
   |----------------------------------------------------------
   */
-	LIMITER_STORE: Env.schema.enum(["redis", "memory"] as const),
+	SMTP_HOST: Env.schema.string(),
+	SMTP_PORT: Env.schema.string(),
+	SMTP_USERNAME: Env.schema.string(),
+	SMTP_PASSWORD: Env.schema.string(),
+	// MAILGUN_API_KEY: Env.schema.string(),
+	// MAILGUN_DOMAIN: Env.schema.string(),
+	// RESEND_API_KEY: Env.schema.string()
+	MAIL_FROM_ADDRESS: Env.schema.string(),
+	MAIL_FROM_NAME: Env.schema.string(),
 });
