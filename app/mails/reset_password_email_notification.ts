@@ -16,11 +16,12 @@ export default class ResetPasswordEmailNotification extends BaseMail {
 	prepare() {
 		this.message
 			.to(this.payload.userEmail)
-			.html(
-				`<p>Click here to <a href='${env.get("APP_URL")}/id/reset-password?token=${this.payload.resetToken}&email=${this.payload.userEmail}'>reset your password</a></p>`,
-			);
-		// .htmlView("emails/reset_password", {
-		// 	resetToken: payload.resetToken,
-		// });
+			// .html(
+			// 	`<p>Click here to <a href='${env.get("APP_URL")}/id/reset-password?token=${this.payload.resetToken}&email=${this.payload.userEmail}'>reset your password</a></p>`,
+			// );
+			.htmlView("emails/reset_password_mail", {
+				email: this.payload.userEmail,
+				token: this.payload.resetToken,
+			});
 	}
 }

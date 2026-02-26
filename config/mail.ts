@@ -2,12 +2,16 @@ import { defineConfig, transports } from "@adonisjs/mail";
 import env from "#start/env";
 
 const mailConfig = defineConfig({
-	default: "smtp",
+	default:
+		env.get("NODE_ENV") === "development" || env.get("NODE_ENV") === "test"
+			? "smtp"
+			: "brevo",
 
 	from: {
 		address: env.get("MAIL_FROM_ADDRESS"),
 		name: env.get("MAIL_FROM_NAME"),
 	},
+
 	/**
 	 * The mailers object can be used to configure multiple mailers
 	 * each using a different transport or same transport with different
@@ -28,16 +32,16 @@ const mailConfig = defineConfig({
 			},
 		}),
 
-		// mailgun: transports.mailgun({
-		//   key: env.get('MAILGUN_API_KEY'),
-		//   baseUrl: 'https://api.mailgun.net/v3',
-		//   domain: env.get('MAILGUN_DOMAIN'),
-		// }),
+		mailgun: transports.mailgun({
+			key: env.get("MAILGUN_API_KEY"),
+			baseUrl: "https://api.mailgun.net/v3",
+			domain: env.get("MAILGUN_DOMAIN"),
+		}),
 
-		// resend: transports.resend({
-		//   key: env.get('RESEND_API_KEY'),
-		//   baseUrl: 'https://api.resend.com',
-		// }),
+		brevo: transports.brevo({
+			key: env.get("BREVO_API_KEY"),
+			baseUrl: "https://api.brevo.com/v3",
+		}),
 	},
 });
 
