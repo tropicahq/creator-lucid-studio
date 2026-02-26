@@ -1,4 +1,3 @@
-import { Secret } from "@adonisjs/core/helpers";
 import { defineConfig } from "@adonisjs/core/http";
 import app from "@adonisjs/core/services/app";
 import env from "#start/env";
@@ -10,8 +9,9 @@ import env from "#start/env";
  * The encryption module will fail to decrypt data if the key is lost or
  * changed. Therefore it is recommended to keep the app key secure.
  */
-export const appKey = new Secret(env.get("APP_KEY"));
 export const appName = env.get("APP_NAME");
+export const appVersion = env.get("APP_VERSION");
+export const appUrl = env.get("APP_URL");
 
 /**
  * The configuration settings used by the HTTP server

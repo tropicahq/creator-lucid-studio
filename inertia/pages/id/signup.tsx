@@ -1,4 +1,5 @@
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Link } from "@adonisjs/inertia/react";
+import { Head, useForm } from "@inertiajs/react";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import AuthLayout from "~/components/shared/layout/auth-layout";

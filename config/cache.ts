@@ -1,5 +1,4 @@
 import { defineConfig, drivers, store } from "@adonisjs/cache";
-import env from "#start/env";
 
 const cacheConfig = defineConfig({
 	default: "default",

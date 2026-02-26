@@ -12,7 +12,7 @@
 import limiter from "@adonisjs/limiter/services/main";
 import env from "./env.js";
 
-export const throttle = limiter.define("global", (ctx) => {
+export const throttle = limiter.define("global", (_ctx) => {
 	const isProduction = env.get("NODE_ENV") === "production";
 	// ctx.request.matchesRoute("id/");
 	return limiter

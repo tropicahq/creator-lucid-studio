@@ -2,7 +2,6 @@ import mail from "@adonisjs/mail/services/main";
 import redis from "@adonisjs/redis/services/main";
 import { Job } from "adonisjs-jobs";
 import ResetPasswordEmailNotification from "#mails/reset_password_email_notification";
-import env from "#start/env";
 
 type ResetPasswordQueuePayload = {
 	hashedToken: string;

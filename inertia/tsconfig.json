@@ -5,7 +5,9 @@
 		"module": "ESNext",
 		"jsx": "react-jsx",
 		"paths": {
-			"~/*": ["./*"]
+			"~/*": ["./*"],
+			"~generated/*": ["../.adonisjs/client/*"],
+			"~registry": ["../.adonisjs/client/registry.ts"]
 		},
 		"types": ["./types.d.ts"]
 	},

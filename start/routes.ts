@@ -7,7 +7,6 @@
 |
 */
 import router from "@adonisjs/core/services/router";
-import transmit from "@adonisjs/transmit/services/main";
 import { middleware } from "./kernel.js";
 import { throttle } from "./limiter.js";
 
@@ -23,18 +22,8 @@ const HealthChecksController = () =>
 const OnboardController = () => import("#controllers/onboard_controller");
 
 router.get("/health", [HealthChecksController]);
-transmit.registerRoutes((route) => {
-	// Ensure you are authenticated to register your client
-	if (route.getPattern() === "__transmit/events") {
-		route.middleware(middleware.auth());
-		return;
-	}
-
-	// Add a throttle middleware to other transmit routes
-	route.use(throttle);
-});
-
 router.jobs();
+
 router
 	.group(() => {
 		router.on("/signup").renderInertia("id/signup").as("signup");
@@ -95,6 +84,17 @@ router
 		router.on("/").renderInertia("home").as("dashboard");
 	})
 	.use([middleware.auth(), middleware.ensureOnboardPass()]);
+
+// transmit.registerRoutes((route) => {
+// 	// Ensure you are authenticated to register your client
+// 	if (route.getPattern() === "__transmit/events") {
+// 		route.middleware(middleware.auth());
+// 		return;
+// 	}
+
+// 	// Add a throttle middleware to other transmit routes
+// 	route.use(throttle);
+// });
 
 // router.post("/create-post-analysis", [
 // 	JobAnalysisManagersController,

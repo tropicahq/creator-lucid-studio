@@ -1,5 +1,4 @@
 import { BaseMail } from "@adonisjs/mail";
-import env from "#start/env";
 
 export default class ResetPasswordEmailNotification extends BaseMail {
 	// from = ''

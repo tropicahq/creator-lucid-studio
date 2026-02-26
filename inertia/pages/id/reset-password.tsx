@@ -1,4 +1,5 @@
-import { Form, Head, Link, useForm } from "@inertiajs/react";
+import { Form, Link } from "@adonisjs/inertia/react";
+import { Head } from "@inertiajs/react";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import party from "party-js";
 import { useState } from "react";

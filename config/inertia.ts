@@ -1,6 +1,5 @@
 import { defineConfig } from "@adonisjs/inertia";
 import type { InferSharedProps } from "@adonisjs/inertia/types";
-import env from "#start/env";
 
 const inertiaConfig = defineConfig({
 	/**
@@ -13,27 +12,28 @@ const inertiaConfig = defineConfig({
 	/**
 	 * Data that should be shared with all rendered pages
 	 */
-	sharedData: {
-		flash: (ctx) => ctx.session?.flashMessages.all(),
-		appName: env.get("APP_NAME"),
-		isOnboarded: (ctx) =>
-			ctx.inertia.always(async () => {
-				const auth = ctx.auth.user;
-				if (auth) {
-					await auth.load("profile");
-					return !!auth.profile;
-				}
-				return false;
-			}),
-		user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
-	},
+	// sharedData: {
+	// 	flash: (ctx) => ctx.session?.flashMessages.all(),
+	// 	appName: env.get("APP_NAME"),
+	// 	isOnboarded: (ctx) =>
+	// 		ctx.inertia.always(async () => {
+	// 			const auth = ctx.auth.user;
+	// 			if (auth) {
+	// 				await auth.load("profile");
+	// 				return !!auth.profile;
+	// 			}
+	// 			return false;
+	// 		}),
+	// 	user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
+	// },
+	encryptHistory: true,
 
 	/**
 	 * Options for the server-side rendering
 	 */
 	ssr: {
 		enabled: true,
-		entrypoint: "inertia/app/ssr.tsx",
+		entrypoint: "inertia/ssr.tsx",
 	},
 });
 

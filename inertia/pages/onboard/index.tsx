@@ -1,10 +1,11 @@
 import { describe } from "node:test";
+import { Form } from "@adonisjs/inertia/react";
 import {
 	createListCollection,
 	useListSelection,
 } from "@ark-ui/react/collection";
 import { TagsInput, useTagsInput } from "@ark-ui/react/tags-input";
-import { Form, Head } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { XIcon } from "lucide-react";
 import party from "party-js";
 import { useRef } from "react";

@@ -13,13 +13,7 @@ export default class AuthController {
 	// public async loginShow({ inertia }: HttpContext) {
 	// 	return inertia.render("id/login");
 	// }
-	public async login({
-		request,
-		response,
-		session,
-		auth,
-		logger,
-	}: HttpContext) {
+	public async login({ request, response, auth }: HttpContext) {
 		const payload = await request.validateUsing(idLoginValidator);
 		const user = await User.verifyCredentials(payload.email, payload.password);
 		await auth.use("web").login(user);

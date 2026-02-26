@@ -3,7 +3,7 @@ import { Job } from "adonisjs-jobs";
 type PipelineAnalyzeDataPayload = {};
 
 export default class PipelineAnalyzeData extends Job {
-	async handle(payload: PipelineAnalyzeDataPayload) {
+	async handle(_payload: PipelineAnalyzeDataPayload) {
 		this.logger.info("PipelineAnalyzeData job handled");
 	}
 }

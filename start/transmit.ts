@@ -1,4 +1,4 @@
-import type { HttpContext } from "@adonisjs/core/http";
-import transmit from "@adonisjs/transmit/services/main";
+// import type { HttpContext } from "@adonisjs/core/http";
+// import transmit from "@adonisjs/transmit/services/main";
 
-console.log("Transmit initialized");
+// console.log("Transmit initialized");
