@@ -5,7 +5,7 @@ set -o errexit
 
 # npm i --legacy-peer-deps
 bun install
-node ace build --ignore-ts-errors --assets
+node ace build --ignore-ts-errors
 cd build
 echo "RUNNING CI..."
 # npm ci --legacy-peer-deps
