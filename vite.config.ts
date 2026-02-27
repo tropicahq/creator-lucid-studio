@@ -25,4 +25,8 @@ export default defineConfig({
 			"~registry": `${import.meta.dirname}/.adonisjs/client/registry.ts`,
 		},
 	},
+	define: {
+		__APP_NAME__: JSON.stringify(process.env.APP_NAME),
+		__APP_URL__: JSON.stringify(process.env.APP_URL),
+	},
 });

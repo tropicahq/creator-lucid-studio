@@ -9,7 +9,6 @@ export default class VerifyPasswordResetTokenMiddleware {
 		/**
 		 * Middleware logic goes here (before the next call)
 		 */
-		console.log("Foo BAr");
 		const token = ctx.request.input("token");
 		const email = ctx.request.input("email");
 
@@ -18,7 +17,6 @@ export default class VerifyPasswordResetTokenMiddleware {
 			return ctx.response.redirect().status(301).toRoute("forgot-password");
 		}
 		const hashedResetToken = await redis.get(`reset_token:${email}`);
-		console.log(hashedResetToken);
 		if (!hashedResetToken) {
 			ctx.session.flash("error", "Invalid or expired reset token");
 			return ctx.response.redirect().status(301).toRoute("forgot-password");

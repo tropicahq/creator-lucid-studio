@@ -4,6 +4,7 @@ import { createToaster, Toast, Toaster } from "@ark-ui/react/toast";
 import { router } from "@inertiajs/react";
 import { XIcon } from "lucide-react";
 import { useEffect } from "react";
+import { TooltipProvider } from "~/components/ui/tooltip";
 
 const toaster = createToaster({
 	placement: "top-end",
@@ -45,7 +46,7 @@ export default function BaseLayout({ children, flash }: LayoutProps) {
 		};
 	}, [flash]);
 	return (
-		<>
+		<TooltipProvider>
 			{children}
 			{/*<ToastContainer />*/}
 			<Portal>
@@ -63,6 +64,6 @@ export default function BaseLayout({ children, flash }: LayoutProps) {
 					)}
 				</Toaster>
 			</Portal>
-		</>
+		</TooltipProvider>
 	);
 }

@@ -1,37 +1,31 @@
-import { Link, usePage } from "@inertiajs/react";
-import { ChartColumnStacked } from "lucide-react";
-import Profile from "#models/profile";
+import { usePage } from "@inertiajs/react";
+import { AppSidebar } from "~/components/shared/app-sidebar";
+import Layout from "~/components/shared/layout/layout";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 import { cn, getInitials } from "~/lib/utils";
-import {
-	NavigationMenu,
-	NavigationMenuItem,
-	NavigationMenuLink,
-	NavigationMenuList,
-} from "../../ui/navigation-menu";
+import type { LayoutProps } from "~/types";
 import ProfileDropdown from "../dropdown-profile";
-import Layout from "./layout";
+import { SiteHeader } from "../site-header";
 
 export default function MainLayout({ children, ...props }: LayoutProps) {
 	return (
 		<Layout {...props}>
-			<div className="flex min-h-full flex-col">
-				<Header isOnboarding={props.isOnboarded} />
-				<main className="flex flex-1 flex-col px-2 py-px">
-					<div className="mx-auto flex w-full grow flex-col items-stretch rounded-lg bg-weaker shadow-xs ring-1 ring-[#E6E7E9]">
-						{children}
+			<div className="[--header-height:calc(--spacing(14))] min-h-full">
+				<SidebarProvider className="flex flex-col">
+					<SiteHeader breadcrump={props.breadcrump} />
+					<div className="flex flex-1">
+						<AppSidebar />
+						<SidebarInset>
+							<main className="flex flex-1 flex-col gap-4 p-4">
+								<div className="mx-auto flex w-full grow flex-col items-stretch bg-weaker]">
+									{children}
+								</div>
+							</main>
+						</SidebarInset>
 					</div>
-				</main>
-				<footer>{/*<p>&copy; {new Date().getFullYear()} Inertia</p>*/}</footer>
+				</SidebarProvider>
 			</div>
 		</Layout>
 	);
@@ -42,7 +36,7 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 	const { user } = page.props;
 	return (
 		<header className="bg-card sticky top-0 z-50">
-			<div>
+			<div className="border-b">
 				<div className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 py-3 sm:px-6">
 					{/**/}
 					<div className="flex items-center gap-4">
@@ -76,7 +70,7 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 					</div>
 				</div>
 			</div>
-			<div className="border-t" hidden={!isOnboarding}>
+			{/*<div className="border-t" hidden={!isOnboarding}>
 				<div className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 py-1.5 sm:px-6">
 					<NavigationMenu>
 						<NavigationMenuList>
@@ -93,7 +87,7 @@ function Header({ isOnboarding }: { isOnboarding: boolean }) {
 						</NavigationMenuList>
 					</NavigationMenu>
 				</div>
-			</div>
+			</div>*/}
 		</header>
 	);
 }

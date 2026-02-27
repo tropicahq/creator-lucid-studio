@@ -10,7 +10,19 @@ type DefaultPageProps = {
 
 type LayoutProps = DefaultPageProps & {
 	children: React.ReactNode;
+	breadcrump: BreadcrumbItems;
 };
+
+interface BreadcrumbItem {
+	title: string;
+	href: string;
+}
+
+interface BreadcrumbItems {
+	title: string;
+	items: BreadcrumbItem[];
+}
+
 type InertiaProps<T extends JSONDataTypes = {}> = PropsWithChildren<
 	Data.SharedProps & T
 >;

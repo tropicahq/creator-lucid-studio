@@ -52,8 +52,9 @@ function ResetPasswordForm({
 			headers={{
 				"Cache-Control": "no-cache",
 			}}
-			href={urlFor("auth.reset_password", {}, { qs: { email } })}
-			method="POST"
+			// href={urlFor("auth.reset_password", {}, { qs: { email } })}
+			route="auth.reset_password"
+			method="post"
 			autoComplete="off"
 			onSuccess={(x) => {
 				const error = !!x.props.flash?.error;

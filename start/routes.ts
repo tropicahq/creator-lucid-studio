@@ -72,7 +72,7 @@ router
 			if (user) {
 				await user.load("profile");
 				if (user.$preloaded.profile) {
-					return ctx.response.redirect().back();
+					return ctx.response.redirect().toRoute("dashboard");
 				} else {
 					await next();
 				}

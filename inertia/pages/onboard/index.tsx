@@ -1,4 +1,3 @@
-import { describe } from "node:test";
 import { Form } from "@adonisjs/inertia/react";
 import {
 	createListCollection,
@@ -9,7 +8,6 @@ import { Head } from "@inertiajs/react";
 import { XIcon } from "lucide-react";
 import party from "party-js";
 import { useRef } from "react";
-import { MotionButton } from "~/components/motion_ui/button";
 import MainLayout from "~/components/shared/layout/main-layout";
 import { Button } from "~/components/ui/button";
 import { Field, FieldError, FieldLabel } from "~/components/ui/field";
@@ -17,6 +15,7 @@ import { Spinner } from "~/components/ui/spinner";
 import { Textarea } from "~/components/ui/textarea";
 import styles from "~/css/tag-input.module.css";
 import { cn } from "~/lib/utils";
+import type { BreadcrumbItems } from "~/types";
 
 const nicheCollection = createListCollection({
 	items: [
@@ -98,6 +97,20 @@ const goalCollection = createListCollection({
 	],
 });
 
+const breadCrumps: BreadcrumbItems = {
+	title: __APP_NAME__,
+	items: [
+		{
+			title: "Dashboard",
+			href: "/",
+		},
+		{
+			title: "Onboard",
+			href: "/onboard",
+		},
+	],
+};
+
 export default function Onboard(props: DefaultPageProps) {
 	const nicheSelection = useListSelection({
 		collection: nicheCollection,
@@ -117,7 +130,7 @@ export default function Onboard(props: DefaultPageProps) {
 	});
 	const continueButton = useRef<HTMLButtonElement>(null);
 	return (
-		<MainLayout {...props}>
+		<MainLayout {...props} breadcrump={breadCrumps}>
 			<Head title="Get Started" />
 			<Form
 				method="post"
@@ -353,15 +366,17 @@ export default function Onboard(props: DefaultPageProps) {
 													key={index}
 													data-most-popular={goal.mostPopular}
 													data-selected={goalSelection.isSelected(goal.value)}
-													className="flex flex-col items-center p-6 text-center border-2 border-slate-100 data-[selected=true]:border-primary rounded-md hover:border-primary data-[selected=false]:transition-all cursor-pointer data-[selected=false]:bg-slate-50/50 data-[most-popular=true]:relative"
+													className="flex flex-col items-center p-6 text-center border-2 border-slate-100 data-[selected=true]:border-primary rounded-md hover:border-primary data-[selected=false]:transition-all cursor-pointer data-[selected=false]:bg-slate-50/50 relative"
 													htmlFor={`goal-${goal.value}`}
 												>
-													<div
-														data-most-popular={goal.mostPopular}
-														className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-black uppercase px-2 py-0.5 rounded tracking-wider"
-													>
-														Most Popular
-													</div>
+													{goal.mostPopular && (
+														<div
+															data-most-popular={goal.mostPopular}
+															className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-black uppercase px-2 py-0.5 rounded tracking-wider"
+														>
+															Most Popular
+														</div>
+													)}
 													<input
 														type="checkbox"
 														hidden

@@ -1,4 +1,4 @@
-import { Link } from "@adonisjs/inertia/react";
+import { Form, Link } from "@adonisjs/inertia/react";
 import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import AuthLayout from "~/components/shared/layout/auth-layout";
@@ -34,75 +34,76 @@ function ForgotPasswordForm({
 	className,
 	...props
 }: React.ComponentProps<"form">) {
-	const form = useForm({
-		email: "",
-	});
-
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		form.clearErrors();
-		form.post("/id/forgot-password", {
-			preserveScroll: true,
-			onSuccess: (x) => {
-				const error = !!x.props.flash?.error;
-				if (!error) form.reset();
-			},
-		});
-	};
-
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className={cn("flex flex-col gap-6", className)}
+		<Form
+			className={cn(
+				"flex flex-col gap-6 inert:opacity-50 inert:pointer-events-none",
+				className,
+			)}
+			disableWhileProcessing
+			resetOnSuccess={false}
+			headers={{
+				"Cache-Control": "no-cache",
+			}}
 			autoComplete="off"
+			route="auth.forgot_password"
+			method="post"
+			onSuccess={(x) => {
+				const _error = !!x.props.flash?.error;
+			}}
+			options={{ preserveScroll: true }}
 			{...props}
 		>
-			<FieldGroup
-				data-invalid={form.hasErrors}
-				className="gap-5 data-[invalid=true]:gap-4"
-			>
-				<div className="flex gap-1">
-					<h1 className="text-2xl font-semibold">Forgot Password</h1>
-				</div>
-				<Field data-invalid={!!form.errors.email}>
-					<FieldLabel htmlFor="email">Email address</FieldLabel>
-					<FieldDescription>
-						Enter the email associated with your account and we’ll send you
-						password reset instructions
-					</FieldDescription>
-					<Input
-						id="email"
-						disabled={form.processing}
-						type="email"
-						aria-invalid={!!form.errors.email}
-						value={form.data.email}
-						onChange={(e) => form.setData("email", e.target.value)}
-						placeholder="Your email address"
-						required
-					/>
-					{form.errors.email && <FieldError>{form.errors.email}</FieldError>}
-				</Field>
-				<Field>
-					<Button
-						disabled={form.processing}
-						size={"lg"}
-						className={"text-white"}
-						type="submit"
-					>
-						{form.processing && <Spinner />}
-						<span className="text-[16px] font-medium" hidden={form.processing}>
-							{/*Send Password Reset Email*/}
-							Submit
-						</span>
-					</Button>
-					<FieldDescription className="px-6 text-center">
-						Already have an account?{" "}
-						<Link href="/id/login" className="text-primary">
-							Sign in
-						</Link>
-					</FieldDescription>
-				</Field>
-			</FieldGroup>
-		</form>
+			{(form) => (
+				<FieldGroup
+					data-invalid={form.hasErrors}
+					className="gap-5 data-[invalid=true]:gap-4"
+				>
+					<div className="flex gap-1">
+						<h1 className="text-2xl font-semibold">Forgot Password</h1>
+					</div>
+					<Field data-invalid={form.invalid("email")}>
+						<FieldLabel htmlFor="email">Email address</FieldLabel>
+						<FieldDescription>
+							Enter the email associated with your account and we’ll send you
+							password reset instructions
+						</FieldDescription>
+						<Input
+							id="email"
+							disabled={form.processing}
+							type="email"
+							aria-invalid={form.invalid("email")}
+							name="email"
+							placeholder="Your email address"
+							required
+						/>
+						{form.errors.email && <FieldError>{form.errors.email}</FieldError>}
+					</Field>
+					<Field>
+						<Button
+							disabled={form.processing}
+							size={"lg"}
+							className={"text-white"}
+							type="submit"
+						>
+							{form.processing && <Spinner />}
+							<span
+								className="text-[16px] font-medium"
+								hidden={form.processing}
+							>
+								{/*Send Password Reset Email*/}
+								Submit
+							</span>
+						</Button>
+						<FieldDescription className="px-6 text-center">
+							Already have an account?{" "}
+							<Link href="/id/login" className="text-primary">
+								Sign in
+							</Link>
+						</FieldDescription>
+					</Field>
+				</FieldGroup>
+			)}
+		</Form>
 	);
 }
