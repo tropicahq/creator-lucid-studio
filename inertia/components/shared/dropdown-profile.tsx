@@ -4,28 +4,17 @@ import type {
 	NavigationMenuLinkState,
 } from "@base-ui/react";
 import { Form, usePage } from "@inertiajs/react";
-import {
-	CirclePlusIcon,
-	CreditCardIcon,
-	LogOutIcon,
-	SettingsIcon,
-	SquarePenIcon,
-	UserIcon,
-	UsersIcon,
-} from "lucide-react";
-import type { ReactNode } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { LogOutIcon } from "lucide-react";
+import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { getInitials } from "~/lib/utils";
-import { Button } from "../ui/button";
 
 type Props = {
 	trigger:

@@ -50,7 +50,7 @@ router
 					.use(middleware.verifyPasswordResetToken());
 				router
 					.post("/reset-password", [AuthController, "resetPassword"])
-					.middleware(throttle);
+					.use(throttle);
 			})
 			.use(middleware.guest());
 

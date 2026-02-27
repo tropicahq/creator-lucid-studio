@@ -2,6 +2,7 @@ import type { HttpContext } from "@adonisjs/core/http";
 import type { NextFn } from "@adonisjs/core/types/http";
 import BaseInertiaMiddleware from "@adonisjs/inertia/inertia_middleware";
 import env from "#start/env";
+import UserTransformer from "#transformers/user_transformer";
 
 export default class InertiaMiddleware extends BaseInertiaMiddleware {
 	async share(ctx: HttpContext) {
@@ -24,7 +25,9 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
 			flash: session?.flashMessages.all(),
 			appName: env.get("APP_NAME"),
 			isOnboarded: ctx.inertia.always(await this.handleIsOnboarded(ctx)),
-			user: ctx.inertia.always(auth?.user),
+			user: ctx.inertia.always(
+				auth?.user ? UserTransformer.transform(auth.user) : undefined,
+			),
 		};
 	}
 

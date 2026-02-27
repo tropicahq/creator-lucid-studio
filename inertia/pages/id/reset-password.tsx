@@ -15,6 +15,7 @@ import {
 } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
 import { Spinner } from "~/components/ui/spinner";
+import { urlFor } from "~/lib/client";
 import { cn } from "~/lib/utils";
 
 const ResetPassword = (props: DefaultPageProps & { email: string }) => {
@@ -51,8 +52,8 @@ function ResetPasswordForm({
 			headers={{
 				"Cache-Control": "no-cache",
 			}}
-			href={`/id/reset-password?email=${email}`}
-			method="post"
+			href={urlFor("auth.reset_password", {}, { qs: { email } })}
+			method="POST"
 			autoComplete="off"
 			onSuccess={(x) => {
 				const error = !!x.props.flash?.error;
