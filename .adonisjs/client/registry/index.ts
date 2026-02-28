@@ -84,6 +84,18 @@ const routes = {
     tokens: [{"old":"/","type":0,"val":"/","end":""}],
     types: placeholder as Registry['dashboard']['types'],
   },
+  'analysis.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/analysis',
+    tokens: [{"old":"/analysis","type":0,"val":"analysis","end":""}],
+    types: placeholder as Registry['analysis.index']['types'],
+  },
+  'analysis.create.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/analysis/create',
+    tokens: [{"old":"/analysis/create","type":0,"val":"analysis","end":""},{"old":"/analysis/create","type":0,"val":"create","end":""}],
+    types: placeholder as Registry['analysis.create.show']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

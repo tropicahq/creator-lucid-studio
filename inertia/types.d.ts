@@ -10,7 +10,7 @@ type DefaultPageProps = {
 
 type LayoutProps = DefaultPageProps & {
 	children: React.ReactNode;
-	breadcrump: BreadcrumbItems;
+	breadCrumb: BreadcrumbItems;
 };
 
 interface BreadcrumbItem {

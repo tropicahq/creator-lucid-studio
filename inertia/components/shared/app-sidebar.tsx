@@ -9,7 +9,10 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	SidebarSeparator,
 } from "~/components/ui/sidebar";
+import { navLinks } from "~/lib/nav-links";
+import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 
 export function AppSidebar() {
@@ -40,9 +43,11 @@ export function AppSidebar() {
 						/>
 					</SidebarMenuItem>
 				</SidebarMenu>
+				<SidebarSeparator />
 			</SidebarHeader>
 			<SidebarContent>
-				{/*<NavMain items={data.navMain} />
+				<NavMain items={navLinks} />
+				{/*
 				<NavProjects projects={data.projects} />
 				<NavSecondary items={data.navSecondary} className="mt-auto" />*/}
 			</SidebarContent>

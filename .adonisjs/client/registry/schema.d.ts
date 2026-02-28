@@ -150,4 +150,26 @@ export interface Registry {
       response: unknown
     }
   }
+  'analysis.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/analysis'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+    }
+  }
+  'analysis.create.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/analysis/create'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+    }
+  }
 }

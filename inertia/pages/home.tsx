@@ -2,15 +2,15 @@ import { Head } from "@inertiajs/react";
 import MainLayout from "~/components/shared/layout/main-layout";
 import type { BreadcrumbItems } from "~/types";
 
-const breadcrumps: BreadcrumbItems = {
-	title: "Home",
+const breadCrumbs: BreadcrumbItems = {
+	title: "Dashboard",
 	items: [],
 };
 export default function Home(props: DefaultPageProps) {
 	return (
-		<MainLayout {...props} breadcrump={breadcrumps}>
+		<MainLayout {...props} breadCrumb={breadCrumbs}>
 			<Head title="Home" />
-			<div>
+			<div className="flex flex-1 flex-col gap-4">
 				<div className="grid auto-rows-min gap-4 md:grid-cols-3">
 					<div className="bg-muted/50 aspect-video rounded-xl" />
 					<div className="bg-muted/50 aspect-video rounded-xl" />

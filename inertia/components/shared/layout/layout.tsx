@@ -2,7 +2,7 @@
 import { Portal } from "@ark-ui/react/portal";
 import { createToaster, Toast, Toaster } from "@ark-ui/react/toast";
 import { router } from "@inertiajs/react";
-import { XIcon } from "lucide-react";
+import { InfoIcon, XIcon } from "lucide-react";
 import { useEffect } from "react";
 import { TooltipProvider } from "~/components/ui/tooltip";
 
@@ -53,7 +53,10 @@ export default function BaseLayout({ children, flash }: LayoutProps) {
 				<Toaster toaster={toaster}>
 					{(toast) => (
 						<Toast.Root key={toast.id} className={"toast-root"}>
-							<Toast.Title className={"toast-title"}>{toast.title}</Toast.Title>
+							<Toast.Title className={"toast-title"}>
+								<InfoIcon className="toast-indicator" />
+								{toast.title}
+							</Toast.Title>
 							<Toast.Description className={"toast-description"}>
 								{toast.description}
 							</Toast.Description>

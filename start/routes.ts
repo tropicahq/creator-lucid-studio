@@ -82,6 +82,11 @@ router
 router
 	.group(() => {
 		router.on("/").renderInertia("home").as("dashboard");
+		router.on("/analysis").renderInertia("analysis/index").as("analysis.index");
+		router
+			.on("/analysis/create")
+			.renderInertia("analysis/create")
+			.as("analysis.create.show");
 	})
 	.use([middleware.auth(), middleware.ensureOnboardPass()]);
 

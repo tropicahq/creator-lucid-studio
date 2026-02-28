@@ -97,7 +97,7 @@ const goalCollection = createListCollection({
 	],
 });
 
-const breadCrumps: BreadcrumbItems = {
+const breadCrumbs: BreadcrumbItems = {
 	title: __APP_NAME__,
 	items: [
 		{
@@ -130,7 +130,7 @@ export default function Onboard(props: DefaultPageProps) {
 	});
 	const continueButton = useRef<HTMLButtonElement>(null);
 	return (
-		<MainLayout {...props} breadcrump={breadCrumps}>
+		<MainLayout {...props} breadCrumb={breadCrumbs}>
 			<Head title="Get Started" />
 			<Form
 				method="post"

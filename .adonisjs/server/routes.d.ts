@@ -17,6 +17,8 @@ export type ScannedRoutes = {
     'profile.onboard': { paramsTuple?: []; params?: {} }
     'onboard': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'analysis.index': { paramsTuple?: []; params?: {} }
+    'analysis.create.show': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'health_checks': { paramsTuple?: []; params?: {} }
@@ -26,6 +28,8 @@ export type ScannedRoutes = {
     'reset-password': { paramsTuple?: []; params?: {} }
     'profile.onboard': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'analysis.index': { paramsTuple?: []; params?: {} }
+    'analysis.create.show': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'health_checks': { paramsTuple?: []; params?: {} }
@@ -35,6 +39,8 @@ export type ScannedRoutes = {
     'reset-password': { paramsTuple?: []; params?: {} }
     'profile.onboard': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'analysis.index': { paramsTuple?: []; params?: {} }
+    'analysis.create.show': { paramsTuple?: []; params?: {} }
   }
   OPTIONS: {
   }

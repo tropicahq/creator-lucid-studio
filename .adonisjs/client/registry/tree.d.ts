@@ -21,4 +21,10 @@ export interface ApiDefinition {
   }
   onboard: typeof routes['onboard']
   dashboard: typeof routes['dashboard']
+  analysis: {
+    index: typeof routes['analysis.index']
+    create: {
+      show: typeof routes['analysis.create.show']
+    }
+  }
 }

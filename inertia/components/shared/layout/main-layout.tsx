@@ -14,7 +14,7 @@ export default function MainLayout({ children, ...props }: LayoutProps) {
 		<Layout {...props}>
 			<div className="[--header-height:calc(--spacing(14))] min-h-full">
 				<SidebarProvider className="flex flex-col">
-					<SiteHeader breadcrump={props.breadcrump} />
+					<SiteHeader breadCrumb={props.breadCrumb} />
 					<div className="flex flex-1">
 						<AppSidebar />
 						<SidebarInset>
