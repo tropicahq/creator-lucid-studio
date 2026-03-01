@@ -52,6 +52,7 @@ export function AppSidebar() {
 				<NavSecondary items={data.navSecondary} className="mt-auto" />*/}
 			</SidebarContent>
 			<SidebarFooter>
+				<SidebarSeparator />
 				<NavUser user={user} />
 			</SidebarFooter>
 		</Sidebar>

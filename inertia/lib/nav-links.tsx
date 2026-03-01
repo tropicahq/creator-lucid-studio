@@ -1,6 +1,7 @@
 import { createTreeCollection } from "@ark-ui/react/collection";
 import {
 	ChartColumn,
+	CircleSmall,
 	LayoutDashboard,
 	type LucideIcon,
 	Plus,
@@ -26,13 +27,18 @@ export const navLinks = createTreeCollection<NavLinksTreeCollection>({
 			},
 			{
 				label: "Analysis",
-				href: urlFor("analysis.index"),
 				icon: ChartColumn,
 				children: [
 					{
-						label: "Run New Analysis",
+						href: urlFor("analysis.index"),
+						label: "All Analysis",
+						icon: CircleSmall,
+						children: [],
+					},
+					{
+						label: "New Analysis",
 						href: urlFor("analysis.create.show"),
-						icon: Plus,
+						icon: CircleSmall,
 						children: [],
 					},
 				],
